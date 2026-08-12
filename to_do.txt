@@ -1,0 +1,40 @@
+# geomemorias2 — TO_DO
+
+## Estado (hecho)
+- [x] Estructura Gradle completa (root + app) para Android Studio.
+- [x] minSdk 28 (Android 9), targetSdk 34, Kotlin 1.9.
+- [x] Modelo Reminder (Room @Entity) igual que v1 (id, text, lat, lng, radiusM, notified).
+- [x] ReminderDao + AppDatabase + AppDatabaseProvider (singleton, device-only).
+- [x] GeoUtils: haversineM + histeresis (evaluate) + intervalForDistance (polling adaptativo). Portado de geo.js (v1).
+- [x] GeofenceHelper: registra/quita geocercas en Play Services (despierta en bg).
+- [x] GeofenceBroadcastReceiver: ENTER -> notifica (si !notified); EXIT -> resetea flag.
+- [x] NotificationHelper: canal (Android 8+) + notificación HIGH.
+- [x] MainActivity: mapa OSMDroid, tocar para ubicar, formulario texto+radio, guardar + add geofence.
+- [x] AndroidManifest con permisos (fine/coarse location, POST_NOTIFICATIONS, internet) + receiver.
+- [x] Recursos mínimos (themes Material3, strings, icono vectorial, proguard, gradle.properties).
+- [x] BRIEF.md (plantilla de features) + README.md (cómo abrir en Android Studio).
+- [x] VERIFICADO compile: assembleDebug SIN errores en VM Linux (SDK platform-28 + Gradle 8.5).
+- [x] APK generado: app/build/outputs/apk/debug/app-debug.apk (15 MB).
+- [x] Corregidos errores Kotlin: triggeringGeofences nullable, fromPixels(Int) no Float,
+      return@setOnClickListener, smart-cast nullable de pendingPoint.
+
+## Pendiente (verificación en dispositivo real)
+1. [ ] VERIFICAR en dispositivo Android 9+ real: guardar recordatorio, acercarse al punto,
+      llegar notificación (geofence ENTER). Al alejar > radio, flag se resetea (re-aviso al regresar).
+      -> En VM no se pudo (sin GPS ni Play Services). Lo hace el usuario en su dispositivo.
+2. [ ] Fallback WorkManager para dispositivos SIN Google Play Services
+      (geofence nativo no disponible en esos equipos).
+3. [ ] UI: lista lateral de recordatorios con distancia en vivo.
+4. [ ] UI: borrar recordatorio (y remover su geofence).
+5. [ ] UI: editar radio despues de guardado + long-press en marker para borrar.
+6. [ ] Modo conducción (ocultar panel, fuente gigante, leer por voz TTS) — pendiente heredado de v1.
+7. [ ] Comando de voz para captura (SpeechRecognizer).
+8. [ ] Mock de ubicacion para probar sin moverse (como la v1 web).
+9. [ ] Persistir/re-registrar geocercas al reiniciar la app (desde Room al arrancar).
+10. [ ] ProGuard en release (ofuscar) + firmar APK de release.
+
+## Notas
+- OSMDroid requiere internet para tiles (o cache offline). Sin API key (coherente con v1).
+- Geofencing de Play Services requiere Google Play Services instalado en el dispositivo.
+- Compilado y verificado en VM; prueba funcional en dispositivo Android 9+ a cargo del usuario.
+- La v1 web esta en ../geomemorias (Documento_Tecnico.md explica el nucleo).

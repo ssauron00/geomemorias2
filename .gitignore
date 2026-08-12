@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+build/
+/*/build/
+
+# Local configuration
+local.properties
+/local.properties
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# OSMDroid cache
+/captures/
+/osmdroid/
+
+# External native build
+.externalNativeBuild/
+.cxx/
+
+# Output
+*.apk
+*.aab
+*.ap_
+
+# Misc
+*.log
+*.tmp
