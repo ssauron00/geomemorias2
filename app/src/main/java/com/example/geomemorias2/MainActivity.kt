@@ -60,15 +60,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupMap() {
         // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
         // XYTileSource: 5º param = path template, 6º param = array de base URLs completas
+        // Base URLs DEBEN terminar en "/" para que concatene bien con {z}/{x}/{y}
         val cartoPositron = XYTileSource(
             "CartoDB Positron",
             0, 19, 256,
-            "/light_all/{z}/{x}/{y}.png",                    // path template
-            arrayOf(                                         // base URLs (subdominios a/b/c/d)
-                "https://a.basemaps.cartocdn.com",
-                "https://b.basemaps.cartocdn.com",
-                "https://c.basemaps.cartocdn.com",
-                "https://d.basemaps.cartocdn.com"
+            "light_all/{z}/{x}/{y}.png",                    // path template (sin leading slash)
+            arrayOf(                                         // base URLs con trailing slash
+                "https://a.basemaps.cartocdn.com/",
+                "https://b.basemaps.cartocdn.com/",
+                "https://c.basemaps.cartocdn.com/",
+                "https://d.basemaps.cartocdn.com/"
             ),
             "© OpenStreetMap contributors, © CARTO"
         )
