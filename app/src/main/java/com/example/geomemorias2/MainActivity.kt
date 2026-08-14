@@ -57,8 +57,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        // TileSource MAPNIK (OpenStreetMap Standard) — usa el userAgent global configurado en onCreate
-        binding.map.setTileSource(TileSourceFactory.MAPNIK)
+        // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
+        // Evita el bloqueo de osm.kiki / tile.openstreetmap.org
+        binding.map.setTileSource(TileSourceFactory.CARTODB_POSITRON)
         
         binding.map.setMultiTouchControls(true)
         binding.map.controller.setZoom(15.0)
