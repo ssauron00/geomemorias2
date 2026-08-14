@@ -60,9 +60,8 @@ class MainActivity : AppCompatActivity() {
         // 2️⃣ AHORA fija tu tile source (pisará lo que haya restaurado load())
         binding.map.setTileSource(cartoPositron)
 
-        // 3️⃣ Configuración de red/cache para evitar bloqueo en hilo principal
+        // 3️⃣ Configuración de red para evitar bloqueo en hilo principal
         binding.map.setUseDataConnection(true)           // descarga en background
-        binding.map.setTileCacheEnabled(true)            // usa cache de osmdroid
 
         db = AppDatabaseProvider.get(this)
         geofence = GeofenceHelper(this)
