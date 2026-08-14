@@ -59,12 +59,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMap() {
         // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
-        // XYTileSource personalizado para osmdroid 6.1.18 (constructor posicional)
+        // XYTileSource: 5º param = path template, 6º param = array de base URLs completas
         val cartoPositron = XYTileSource(
             "CartoDB Positron",
             0, 19, 256,
-            "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-            arrayOf("a", "b", "c", "d"), // subdominios para parallelismo
+            "/light_all/{z}/{x}/{y}.png",                    // path template
+            arrayOf(                                         // base URLs (subdominios a/b/c/d)
+                "https://a.basemaps.cartocdn.com",
+                "https://b.basemaps.cartocdn.com",
+                "https://c.basemaps.cartocdn.com",
+                "https://d.basemaps.cartocdn.com"
+            ),
             "© OpenStreetMap contributors, © CARTO"
         )
         binding.map.setTileSource(cartoPositron)
