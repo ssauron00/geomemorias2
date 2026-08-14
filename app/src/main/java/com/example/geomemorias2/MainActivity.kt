@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // User-Agent único para tu app (requerido por política OSM) — ANTES de load()
+        // User-Agent único para tu app (requerido por política OSM)
         Configuration.getInstance().userAgentValue = "com.example.geomemorias2"
 
         // Tile source personalizado
@@ -53,15 +53,12 @@ class MainActivity : AppCompatActivity() {
             "© OpenStreetMap contributors, © CARTO"
         )
 
-        // Load prefs primero (para que no falle), luego setear tile source y guardar
         Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
-        Configuration.getInstance().setDefaultTileSource(cartoPositron)
-        Configuration.getInstance().save(this, getSharedPreferences("osm", MODE_PRIVATE))
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // También en el MapView
+        // Tile source en MapView (lo único que funciona en esta versión)
         binding.map.setTileSource(cartoPositron)
 
         db = AppDatabaseProvider.get(this)
