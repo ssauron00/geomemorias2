@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // User-Agent único para tu app (requerido por política OSM)
         Configuration.getInstance().userAgentValue = "com.example.geomemorias2"
 
-        // Tile source personalizado
+        // Tile source personalizado ANTES de setContentView (evita que load() restaure Mapnik)
         val cartoPositron = XYTileSource(
             "CartoDB Positron",
             0, 19, 256,
@@ -53,13 +53,17 @@ class MainActivity : AppCompatActivity() {
             "© OpenStreetMap contributors, © CARTO"
         )
 
-        Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
+        // Setear en Configuration ANTES de inflar la vista (MapView lo lee al crearse)
+        Configuration.getInstance().setDefaultTileSource(cartoPositron)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Tile source en MapView (lo único que funciona en esta versión)
+        // También en MapView por seguridad
         binding.map.setTileSource(cartoPositron)
+
+        // Load prefs DESPUÉS (para no pisar el tile source)
+        Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
 
         db = AppDatabaseProvider.get(this)
         geofence = GeofenceHelper(this)
