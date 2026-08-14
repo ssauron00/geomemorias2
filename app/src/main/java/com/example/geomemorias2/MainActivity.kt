@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.geomemorias2.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.util.GeoPoint
@@ -60,17 +59,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMap() {
         // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
-        // XYTileSource personalizado para osmdroid 6.1.18 (no tiene CARTODB_POSITRON built-in)
+        // XYTileSource personalizado para osmdroid 6.1.18 (constructor posicional)
         val cartoPositron = XYTileSource(
-            name = "CartoDB Positron",
-            minZoom = 0,
-            maxZoom = 19,
-            tileSizePixels = 256,
-            urlTemplate = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-            attribution = "© OpenStreetMap contributors, © CARTO"
-        ).apply {
-            tileUrlPattern = arrayOf("a", "b", "c", "d") // subdominios para parallelismo
-        }
+            "CartoDB Positron",
+            0, 19, 256,
+            "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+            arrayOf("a", "b", "c", "d"), // subdominios para parallelismo
+            "© OpenStreetMap contributors, © CARTO"
+        )
         binding.map.setTileSource(cartoPositron)
 
         binding.map.setMultiTouchControls(true)
