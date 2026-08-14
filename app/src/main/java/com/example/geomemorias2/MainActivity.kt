@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // User-Agent único para tu app (requerido por política OSM) — ANTES de load()
+        Configuration.getInstance().userAgentValue = BuildConfig.APPLICATION_ID
         Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -55,12 +57,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        // Configurar tile source con User-Agent adecuado (requerido por OSM)
-        val tileSource = TileSourceFactory.MAPNIK.apply {
-            // User-Agent único para tu app (requerido por política OSM)
-            this.userAgent = BuildConfig.APPLICATION_ID
-        }
-        binding.map.setTileSource(tileSource)
+        // TileSource MAPNIK (OpenStreetMap Standard) — usa el userAgent global configurado en onCreate
+        binding.map.setTileSource(TileSourceFactory.MAPNIK)
         
         binding.map.setMultiTouchControls(true)
         binding.map.controller.setZoom(15.0)
