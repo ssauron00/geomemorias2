@@ -66,10 +66,7 @@ class MainActivity : AppCompatActivity() {
             "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
             arrayOf("a", "b", "c", "d"), // subdominios para parallelismo
             "© OpenStreetMap contributors, © CARTO"
-        ).apply {
-            // Configurar para HTTPS y tile policy
-            tileUrlPattern = arrayOf("a", "b", "c", "d")
-        }
+        )
         binding.map.setTileSource(cartoPositron)
 
         // Forzar recarga de tiles
