@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 
         // 3️⃣ Configuración de red/cache para evitar bloqueo en hilo principal
         binding.map.setUseDataConnection(true)           // descarga en background
-        binding.map.setTileRequestTimeout(10_000)        // 10s timeout
         binding.map.setTileCacheEnabled(true)            // usa cache de osmdroid
 
         db = AppDatabaseProvider.get(this)
