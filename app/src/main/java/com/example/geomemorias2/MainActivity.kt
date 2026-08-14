@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             ),
             "© OpenStreetMap contributors, © CARTO"
         )
-        Configuration.getInstance().setTileSource(cartoPositron)
+        Configuration.getInstance().setDefaultTileSource(cartoPositron)
 
         Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
         binding = ActivityMainBinding.inflate(layoutInflater)
