@@ -53,9 +53,6 @@ class MainActivity : AppCompatActivity() {
             "© OpenStreetMap contributors, © CARTO"
         )
 
-        // Setear en Configuration ANTES de inflar la vista (MapView lo lee al crearse)
-        Configuration.getInstance().setTileSource(cartoPositron)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
