@@ -42,6 +42,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Tile source ANTES de cualquier otra cosa (load() puede haber restaurado Mapnik)
+        val cartoPositron = XYTileSource(
+            "CartoDB Positron",
+            0, 19, 256,
+            "light_all/{z}/{x}/{y}.png",
+            arrayOf(
+                "https://a.basemaps.cartocdn.com/",
+                "https://b.basemaps.cartocdn.com/",
+                "https://c.basemaps.cartocdn.com/",
+                "https://d.basemaps.cartocdn.com/"
+            ),
+            "© OpenStreetMap contributors, © CARTO"
+        )
+        binding.map.setTileSource(cartoPositron)
+
         db = AppDatabaseProvider.get(this)
         geofence = GeofenceHelper(this)
         NotificationHelper.ensureChannel(this)
@@ -58,30 +73,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
-        // XYTileSource: 5º param = path template, 6º param = array de base URLs completas
-        // Base URLs DEBEN terminar en "/" para que concatene bien con {z}/{x}/{y}
-        val cartoPositron = XYTileSource(
-            "CartoDB Positron",
-            0, 19, 256,
-            "light_all/{z}/{x}/{y}.png",                    // path template (sin leading slash)
-            arrayOf(                                         // base URLs con trailing slash
-                "https://a.basemaps.cartocdn.com/",
-                "https://b.basemaps.cartocdn.com/",
-                "https://c.basemaps.cartocdn.com/",
-                "https://d.basemaps.cartocdn.com/"
-            ),
-            "© OpenStreetMap contributors, © CARTO"
-        )
-        binding.map.setTileSource(cartoPositron)
+            // Multi-touch + zoom/centro + invalidar para forzar recarga
+            binding.map.setMultiTouchControls(true)
+            binding.map.controller.setZoom(15.0)
+            binding.map.controller.setCenter(GeoPoint(19.4326, -99.1332)) // CDMX default
+            binding.map.invalidate()
 
-        // Forzar recarga de tiles
-        binding.map.setMultiTouchControls(true)
-        binding.map.controller.setZoom(15.0)
-        binding.map.controller.setCenter(GeoPoint(19.4326, -99.1332)) // CDMX default
-        binding.map.invalidate()
-
-        // Tocar el mapa -> fija pendingPoint y abre formulario
+            // Tocar el mapa -> fija pendingPoint y abre formulario
         binding.map.overlays.add(object : Overlay() {
             override fun onSingleTapConfirmed(e: android.view.MotionEvent, mapView: org.osmdroid.views.MapView): Boolean {
                 val p = mapView.projection.fromPixels(e.x.toInt(), e.y.toInt())
