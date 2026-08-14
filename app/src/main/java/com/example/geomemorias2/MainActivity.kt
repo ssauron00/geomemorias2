@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.geomemorias2.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Overlay
@@ -54,6 +55,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
+        // Configurar tile source con User-Agent adecuado (requerido por OSM)
+        val tileSource = TileSourceFactory.MAPNIK.apply {
+            // User-Agent único para tu app (requerido por política OSM)
+            this.userAgent = BuildConfig.APPLICATION_ID
+        }
+        binding.map.setTileSource(tileSource)
+        
         binding.map.setMultiTouchControls(true)
         binding.map.controller.setZoom(15.0)
         binding.map.controller.setCenter(GeoPoint(19.4326, -99.1332)) // CDMX default
