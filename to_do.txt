@@ -17,6 +17,7 @@
 - [x] APK generado: app/build/outputs/apk/debug/app-debug.apk (15 MB).
 - [x] Corregidos errores Kotlin: triggeringGeofences nullable, fromPixels(Int) no Float,
       return@setOnClickListener, smart-cast nullable de pendingPoint.
+- [x] Fix: Eliminado Configuration.setTileSource() inexistente en osmdroid (tile source se setea en MapView).
 
 ## Pendiente (verificación en dispositivo real)
 1. [ ] VERIFICAR en dispositivo Android 9+ real: guardar recordatorio, acercarse al punto,
