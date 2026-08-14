@@ -66,10 +66,7 @@ class MainActivity : AppCompatActivity() {
             "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
             arrayOf("a", "b", "c", "d"), // subdominios para parallelismo
             "© OpenStreetMap contributors, © CARTO"
-        ).apply {
-            // User-Agent explícito en el TileSource (el global a veces no se hereda)
-            userAgent = "com.example.geomemorias2"
-        }
+        )
         binding.map.setTileSource(cartoPositron)
 
         binding.map.setMultiTouchControls(true)
