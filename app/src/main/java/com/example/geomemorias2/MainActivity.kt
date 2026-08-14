@@ -9,7 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.geomemorias2.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.tileprovider.tilesource.XYTileSource
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Overlay
@@ -58,9 +60,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMap() {
         // CartoDB Positron — CDN global, gratis, sin API key, política permisiva
-        // Evita el bloqueo de osm.kiki / tile.openstreetmap.org
-        binding.map.setTileSource(TileSourceFactory.CARTODB_POSITRON)
-        
+        // XYTileSource personalizado para osmdroid 6.1.18 (no tiene CARTODB_POSITRON built-in)
+        val cartoPositron = XYTileSource(
+            name = "CartoDB Positron",
+            minZoom = 0,
+            maxZoom = 19,
+            tileSizePixels = 256,
+            urlTemplate = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+            attribution = "© OpenStreetMap contributors, © CARTO"
+        ).apply {
+            tileUrlPattern = arrayOf("a", "b", "c", "d") // subdominios para parallelismo
+        }
+        binding.map.setTileSource(cartoPositron)
+
         binding.map.setMultiTouchControls(true)
         binding.map.controller.setZoom(15.0)
         binding.map.controller.setCenter(GeoPoint(19.4326, -99.1332)) // CDMX default
