@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // User-Agent único para tu app (requerido por política OSM) — ANTES de load()
-        Configuration.getInstance().userAgentValue = BuildConfig.APPLICATION_ID
+        Configuration.getInstance().userAgentValue = "com.example.geomemorias2"
         Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
