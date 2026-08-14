@@ -1,6 +1,7 @@
 package com.example.geomemorias2
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -71,11 +72,14 @@ class MainActivity : AppCompatActivity() {
         setupUi()
 
         // Pedir permisos al iniciar (igual filosofía: pedir al arrancar)
-        permLauncher.launch(arrayOf(
+        val perms = mutableListOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.POST_NOTIFICATIONS
-        ))
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33+
+            perms.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        permLauncher.launch(perms.toTypedArray())
     }
 
     private fun setupMap() {
@@ -110,7 +114,7 @@ class MainActivity : AppCompatActivity() {
             val text = binding.etText.text.toString().ifBlank { "Recordatorio" }
             val radius = binding.etRadius.text.toString().toIntOrNull() ?: Reminder.DEFAULT_RADIUS_M
             val r = Reminder(
-                id = "r" + UUID.randomUUID().toString().take(12),
+                id = "r-${UUID.randomUUID().toString().substring(0, 12)}",
                 text = text, lat = fixed.latitude, lng = fixed.longitude,
                 radiusM = radius, notified = false
             )
