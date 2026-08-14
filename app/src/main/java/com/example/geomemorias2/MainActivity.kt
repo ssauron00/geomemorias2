@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.geomemorias2.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
+import org.osmdroid.library.BuildConfig
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
