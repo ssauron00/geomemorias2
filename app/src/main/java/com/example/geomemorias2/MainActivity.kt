@@ -39,10 +39,8 @@ class MainActivity : AppCompatActivity() {
         // User-Agent único para tu app (requerido por política OSM)
         Configuration.getInstance().userAgentValue = "com.example.geomemorias2"
 
-        // Tile source personalizado ANTES de setContentView (evita que load() restaure Mapnik)
         val cartoPositron = XYTileSource(
-            "CartoDB Positron",
-            0, 19, 256,
+            "CartoDB Positron", 0, 19, 256,
             "light_all/{z}/{x}/{y}.png",
             arrayOf(
                 "https://a.basemaps.cartocdn.com/",
@@ -56,11 +54,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // También en MapView por seguridad
+        // 1️⃣ Cargar prefs PRIMERO (puede restaurar tile source guardado)
+        Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
+
+        // 2️⃣ AHORA fija tu tile source (pisará lo que haya restaurado load())
         binding.map.setTileSource(cartoPositron)
 
-        // Load prefs DESPUÉS (para no pisar el tile source)
-        Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
+        // 3️⃣ Configuración de red/cache para evitar bloqueo en hilo principal
+        binding.map.setUseDataConnection(true)           // descarga en background
+        binding.map.setTileRequestTimeout(10_000)        // 10s timeout
+        binding.map.setTileCacheEnabled(true)            // usa cache de osmdroid
 
         db = AppDatabaseProvider.get(this)
         geofence = GeofenceHelper(this)
