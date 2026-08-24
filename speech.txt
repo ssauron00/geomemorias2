@@ -1,0 +1,296 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    GEOMEMORIAS2 — Presentación de la App                   ║
+║                    Recordatorios Geolocalizados para Android               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+⏱️ TIEMPO ESTIMADO: 10-15 minutos
+🎯 AUDIENCIA: General / Desarrolladores / Inversionistas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    🎤 GUION DE LA PRESENTACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📌 Nota: Las líneas que empiezan con > son lo que se dice en voz alta.
+   Las líneas que empiezan con [SLIDE] indican cambio de diapositiva.
+   Las líneas que empiezan con [TIEMPO] indican el tiempo acumulado.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 1 — Portada]
+[TIEMPO: 0:00]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Hola a todos. Mi nombre es [Nombre] y hoy les presento Geomemorias2,
+> una app Android de recordatorios geolocalizados."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 2 — El Problema]
+[TIEMPO: 0:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Todos hemos olvidado algo importante al pasar por un lugar clave."
+> 
+> "¿Les ha pasado que olvidan comprar algo en el supermercado?"
+> "¿O que pasan por la farmacia y se olvidan de las medicinas?"
+> "¿O que llegan a la oficina y recuerdan que debían entregar un documento?"
+> 
+> "El problema no es la memoria. El problema es que los recordatorios
+> tradicionales se basan en TIEMPO, no en UBICACIÓN."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 3 — La Solución]
+[TIEMPO: 1:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Geomemorias2 es una app Android que crea recordatorios anclados a
+> ubicaciones físicas del mundo real."
+> 
+> "Guardas un recordatorio con texto, coordenadas GPS y un radio de activación.
+> La app te avisa automáticamente cuando estás cerca."
+> 
+> "No necesitas recordar. La ubicación activa el recordatorio por ti."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 4 — Cómo Funciona]
+[TIEMPO: 2:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Veamos cómo funciona:"
+> 
+> "1. Abres la app y ves un mapa interactivo."
+> "2. Tocas en una ubicación para fijar un punto."
+> "3. Escribes el recordatorio: 'Comprar leche', radio 200 metros."
+> "4. La app guarda y registra la geocerca."
+> "5. Te olvidas de la app. Ella hace el trabajo."
+> "6. Al pasar cerca, recibes una notificación automática."
+> 
+> "Así de simple. Sin estrés, sin olvidos."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 5 — Casos de Uso]
+[TIEMPO: 3:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "¿Para qué sirve en la vida real?"
+> 
+> "CASO 1: Compras del supermercado"
+> "María crea recordatorios al inicio de la semana. El sábado, mientras camina,
+> la app le avisa al pasar por cada tienda. No olvida nada."
+> 
+> "CASO 2: Entregas de trabajo"
+> "Carlos tiene que entregar documentos en 3 oficinas. Activa modo conducción
+> y la app le dice por voz qué entregar en cada lugar. Sin mirar el teléfono."
+> 
+> "CASO 3: Citas médicas"
+> "Ana tiene cita con el dentista y necesita comprar medicinas. La app le
+> recuerda al acercarse a la clínica y después en la farmacia."
+> 
+> "CASO 4: Viaje por carretera"
+> "Roberto viaja 5 horas. Crea recordatorios para gasolina, descanso y comida.
+> La app le avisa por voz mientras conduce. Seguro y organizado."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 6 — Modo Conducción]
+[TIEMPO: 5:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Una de nuestras features más importantes es el Modo Conducción."
+> 
+> "¿Qué es? Un overlay transparente sobre el mapa que se activa cuando
+> conduces. Muestra recordatorios cercanos por TTS mientras el teléfono
+> está en segundo plano."
+> 
+> "Características:"
+> "- Botones grandes de 64dp para tocar sin mirar"
+> "- Comando de voz para crear recordatorios hablando"
+> "- Notificación persistente con acción 'Detener'"
+> "- Verificación de batería para alertas confiables"
+> 
+> "El usuario puede crear recordatorios mientras conduce:
+> toca el botón de voz, dice 'Recoger paquete en la oficina',
+> y se guarda automáticamente en su ubicación actual."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 7 — Android Auto]
+[TIEMPO: 7:00]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "También nos integramos con Android Auto."
+> 
+> "Usando la Car App Library, mostramos los recordatorios en la pantalla
+> del auto mientras conduces."
+> 
+> "Funcionalidades:"
+> "- Lista de recordatorios con distancia en tiempo real"
+> "- Auto-refresh cada 10 segundos"
+> "- Navegación entre lista y detalle"
+> "- Diseño cumpliendo directrices de Android Auto"
+> 
+> "El usuario ve sus recordatorios en la pantalla del carro,
+> sin necesidad de tocar el teléfono."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 8 — Tecnología]
+[TIEMPO: 8:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "¿Qué tecnologías usamos?"
+> 
+> "- Kotlin nativo para Android"
+> "- Room Database para persistencia local (sin nube)"
+> "- OSMDroid para el mapa (open-source, sin API key)"
+> "- Play Services Geofencing para notificaciones automáticas"
+> "- Foreground Service para segundo plano"
+> "- Car App Library para Android Auto"
+> "- TextToSpeech para anuncios por voz"
+> 
+> "Todo funciona sin conexión a internet. Los datos se guardan
+> localmente en el dispositivo. Privacidad total."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 9 — Arquitectura]
+[TIEMPO: 9:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Nuestra arquitectura tiene 4 capas:"
+> 
+> "1. UI: MainActivity, Driving Mode Overlay, Android Auto Screens"
+> "2. Servicios: DrivingModeService, DrivingTtsManager, GeofenceBroadcastReceiver"
+> "3. Datos: Room Database con ReminderDao"
+> "4. Externa: Play Services, OSMDroid, TextToSpeech"
+> 
+> "Usamos SharedFlow para comunicación asíncrona entre servicios y UI.
+> El DrivingModeService publica ubicación y eventos TTS que la
+> MainActivity observa y actualiza."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 10 — Diferenciador]
+[TIEMPO: 10:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "¿Qué nos diferencia de otras apps de recordatorios?"
+> 
+> "1. Geofencing REAL en background: Play Services despierta la app
+>    aunque esté cerrada. No es polling, es proactividad."
+> 
+> "2. Modo conducción seguro: Overlay transparente, botones grandes,
+>    TTS por voz. Diseñado para no mirar la pantalla."
+> 
+> "3. Android Auto: Integración completa con la pantalla del auto."
+> 
+> "4. Privacidad: Sin cuenta de usuario, sin servidor, sin datos
+>    compartidos. Todo local."
+> 
+> "5. Open-source: OSMDroid, sin API key de Google. Costo cero."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 11 — Estado Actual]
+[TIEMPO: 11:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Estado actual: Versión 1.2.0 funcional."
+> 
+> "Completado:"
+> "- Core: Room + Geofencing + OSMDroid + UI"
+> "- Android Auto: Lista + Detalle"
+> "- Modo Conducción: Foreground Service + TTS"
+> "- Comandos de Voz"
+> "- Documentación completa con diagramas Mermaid"
+> 
+> "Pendiente:"
+> "- Verificar geofencing en dispositivo real"
+> "- ProGuard release + firma APK"
+> "- Probar notificaciones en Android Auto"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SLIDE 12 — Cierre]
+[TIEMPO: 12:30]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+> "Para cerrar, Geomemorias2 resuelve un problema real:"
+> "Olvidar tareas al pasar por lugares específicos."
+> 
+> "Con geofencing inteligente, modo conducción seguro y Android Auto,
+> la app se convierte en un asistente personal que no olvida."
+> 
+> "No pierdas tiempo revisando tu lista de pendientes.
+> La app te avisa cuando estás cerca de lo que necesitas hacer."
+> 
+> "¿Preguntas?"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    📊 RESUMEN PARA LA AUDIENCIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  GEOMEMORIAS2 = Recordatorios Geolocalizados + Android Auto + Modo Auto    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  OBJETIVO:
+    Recordatorios que se activan por UBICACIÓN, no por tiempo.
+
+  DIFERENCIADOR:
+    Geofencing real en background + Modo conducción seguro + Android Auto.
+
+  TECNOLOGÍA:
+    Kotlin nativo, Room local, OSMDroid, Play Services, Car App Library.
+
+  MERCADO OBJETIVO:
+    Personas que olvidan tareas al pasar por lugares específicos.
+
+  ESTADO:
+    Versión 1.2.0 funcional. Core completo, pendientes menores.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    📋 NOTAS ADICIONALES PARA EL PRESENTADOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DISTRIBUCIÓN DEL TIEMPO:
+  • Portada: 30 segundos
+  • El Problema: 1 minuto
+  • La Solución: 1 minuto
+  • Cómo Funciona: 1 minuto
+  • Casos de Uso: 2 minutos
+  • Modo Conducción: 1.5 minutos
+  • Android Auto: 1.5 minutos
+  • Tecnología: 1 minuto
+  • Arquitectura: 1 minuto
+  • Diferenciador: 1 minuto
+  • Estado Actual: 1 minuto
+  • Cierre + Preguntas: 1 minuto
+  TOTAL: ~12-15 minutos
+
+CONSEJOS:
+  • Usa un demo en vivo si es posible (mostrar mapa + crear recordatorio)
+  • Muestra el modo conducción en un celular real
+  • Si hay tiempo, conecta Android Auto (DHU o dispositivo real)
+  • Ten准备 screenshots por si el demo falla
+  • Enfoca en el BENEFICIO al usuario, no en la tecnología
+
+PREGUNTAS COMUNES Y RESPUESTAS:
+  Q: ¿Necesita internet?
+  A: No. Solo para descargar el mapa la primera vez. Todo lo demás es local.
+
+  Q: ¿Cuánta batería consume?
+  A: Mínimo. El Geofencing de Play Services es eficiente. El modo conducción
+     usa Foreground Service con verificación de batería.
+
+  Q: ¿Es segura la ubicación?
+  A: Sí. Los datos no salen del dispositivo. Sin servidor, sin nube, sin cuentas.
+
+  Q: ¿Funciona en todos los Android?
+  A: Android 9 (API 28) en adelante. Android Auto requiere carro compatible.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         🙏 ¡GRACIAS!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Repositorio: github.com/ssauron00/geomemorias2
+  Licencia: Open Source
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  "No pierdas tiempo revisando tu lista de pendientes.                       ║
+║   La app te avisa cuando estás cerca de lo que necesitas hacer."            ║
+╚══════════════════════════════════════════════════════════════════════════════╝

@@ -20,6 +20,10 @@
 - [x] Fix: Eliminado Configuration.setTileSource() inexistente en osmdroid (tile source se setea en MapView).
 - [x] Fix: Mapa en blanco - XYTileSource armaba URL malformada.
 - [x] Fix: Configuration.load() movido ANTES de setContentView() (requisito osmdroid).
+- [x] Fix: quitar setTileCacheEnabled (no existe en osmdroid 6.1.18).
+- [x] Fix: quitar setTileRequestTimeout (no existe en osmdroid 6.1.18).
+- [x] Fix: mapa no carga - setTileSource después de load() + config red/cache.
+- [x] Fix: lint warnings - POST_NOTIFICATIONS guard API 33+ + UUID substring fix.
 - [x] UI: lista lateral de recordatorios con distancia en vivo (DrawerLayout + RecyclerView + FusedLocationProviderClient).
 - [x] UI: borrar recordatorio (y remover su geofence) con confirmación.
 - [x] UI: editar radio despues de guardado + long-press en marker para borrar (diálogos).
