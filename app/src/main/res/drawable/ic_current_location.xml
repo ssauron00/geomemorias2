@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Outer white circle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,12m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+    <!-- Blue inner circle -->
+    <path
+        android:fillColor="#4285F4"
+        android:pathData="M12,12m-7,0a7,7 0,1 1,14 0a7,7 0,1 1,-14 0" />
+    <!-- Inner highlight -->
+    <path
+        android:fillColor="#80BFFF"
+        android:pathData="M12,12m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+</vector>

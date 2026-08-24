@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Tema base Material3 (referenciado en AndroidManifest) -->
-    <style name="Theme.Material3.DayNight" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">?attr/colorSurface</item>
-    </style>
+    <!-- No custom theme needed — using Theme.Material3.DayNight.NoActionBar directly in manifest -->
 </resources>

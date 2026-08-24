@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drivingModeOverlayRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    android:clickable="false"
+    android:focusable="false">
+
+    <!-- Top info bar - semi-transparent, shows nearest reminder -->
+    <LinearLayout
+        android:id="@+id/drivingInfoBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#CC1A1A2E"
+        android:padding="12dp"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/tvDrivingReminderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/driving_mode_no_reminders"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/tvDrivingRadius"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#B3FFFFFF"
+                android:textSize="16sp"
+                android:text="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#66FFFFFF"
+                android:textSize="16sp"
+                android:text="  •  " />
+
+            <TextView
+                android:id="@+id/tvDrivingDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#B3FFFFFF"
+                android:textSize="16sp"
+                android:text="" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Spacer: map shows through this area -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Voice recording indicator (shown while listening) -->
+    <LinearLayout
+        android:id="@+id/voiceRecordingIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#CC4285F4"
+        android:padding="12dp"
+        android:visibility="gone"
+        android:elevation="8dp">
+
+        <ProgressBar
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12dp"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:indeterminateTint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tvVoiceHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/driving_voice_listening" />
+    </LinearLayout>
+
+
+</LinearLayout>

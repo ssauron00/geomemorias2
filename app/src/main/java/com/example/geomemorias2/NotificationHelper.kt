@@ -3,6 +3,7 @@ package com.example.geomemorias2
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import androidx.core.app.NotificationCompat
 
 /**
@@ -26,14 +27,34 @@ object NotificationHelper {
         }
     }
 
+    internal const val DRIVING_CHANNEL_ID = "geomemorias_driving_channel"
+    private const val DRIVING_CHANNEL_NAME = "Modo conducción"
+
+    fun ensureDrivingChannel(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val mgr = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            if (mgr.getNotificationChannel(DRIVING_CHANNEL_ID) == null) {
+                val ch = NotificationChannel(
+                    DRIVING_CHANNEL_ID, DRIVING_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW
+                ).apply {
+                    description = "Notificación persistente del modo conducción"
+                    setShowBadge(false)
+                }
+                mgr.createNotificationChannel(ch)
+            }
+        }
+    }
+
     fun fire(context: Context, r: Reminder) {
         ensureChannel(context)
         val mgr = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notif = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_map)
-            .setContentTitle("📍 Geomemorias")
+            .setContentTitle(context.getString(R.string.notif_title))
             .setContentText(r.text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(r.text))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_NAVIGATION)
             .setAutoCancel(true)
             .build()
         mgr.notify(r.id.hashCode(), notif)
