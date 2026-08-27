@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 /**
  * DrivingModeService — Foreground Service that keeps location tracking + TTS alerts
- * running when the app goes to background during driving mode.
+ * running when the app goes to background during Modo Susurro.
  *
  * Architecture:
  * - Owns its own FusedLocationProviderClient + LocationCallback
@@ -39,11 +39,11 @@ import kotlinx.coroutines.launch
 class DrivingModeService : Service() {
 
     companion object {
-        private const val TAG = "DrivingModeService"
+        private const val TAG = "ModoSusurro"
         private const val NOTIFICATION_ID = 7777
 
-        const val ACTION_START = "com.example.geomemorias2.ACTION_DRIVING_START"
-        const val ACTION_STOP = "com.example.geomemorias2.ACTION_DRIVING_STOP"
+        const val ACTION_START = "mx.ssauroncorp.ecos.ACTION_DRIVING_START"
+        const val ACTION_STOP = "mx.ssauroncorp.ecos.ACTION_DRIVING_STOP"
 
         // SharedFlow: location updates emitted by the service → observed by MainActivity
         private val _locationUpdates = MutableSharedFlow<Pair<Double, Double>>(extraBufferCapacity = 16)
@@ -178,7 +178,7 @@ class DrivingModeService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, NotificationHelper.DRIVING_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_map)
             .setContentTitle(getString(R.string.notif_title))
-            .setContentText("Modo conducción activo — alertas por voz activadas")
+            .setContentText("Modo Susurro activo — alertas por voz activadas")
             .setOngoing(true)
             .setContentIntent(pendingOpen)
             .addAction(android.R.drawable.ic_media_pause, "Detener", pendingStop)

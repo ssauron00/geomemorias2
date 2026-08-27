@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import androidx.car.app.CarContext
 import androidx.car.app.Screen

@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -8,6 +8,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun reminderDao(): ReminderDao
 
     companion object {
-        const val NAME = "geomemorias2.db"
+        const val NAME = "ecos.db"
     }
 }

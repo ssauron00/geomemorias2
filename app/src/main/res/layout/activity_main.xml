@@ -132,7 +132,7 @@
                     android:layout_height="32dp"
                     android:background="#E0E0E0" />
 
-                <!-- Modo conducción -->
+                <!-- Modo Susurro -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDrivingMode"
                     style="@style/Widget.Material3.Button.TextButton"

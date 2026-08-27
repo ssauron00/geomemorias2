@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

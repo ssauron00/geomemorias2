@@ -1,17 +1,20 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import android.provider.Settings
 import android.speech.RecognizerIntent
+import android.provider.Settings
+
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -29,7 +32,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.geomemorias2.databinding.ActivityMainBinding
+import mx.ssauroncorp.ecos.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -46,6 +49,8 @@ import org.osmdroid.views.overlay.Polygon
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
+
+
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var db: AppDatabase
@@ -68,59 +73,19 @@ class MainActivity : AppCompatActivity() {
     private val circleMap = mutableMapOf<String, Polygon>()
     private var currentLocationMarker: Marker? = null
     
-    // Driving mode
+    // Modo Susurro
     private lateinit var ttsManager: DrivingTtsManager
     private var isDrivingMode = false
-    private var isServiceDrivingMode = false  // true when the Foreground Service is running
+    private var isServiceDrivingMode = false  // true when the Foreground Service is running (Modo Susurro)
     private var previousNearestId: String? = null  // Track nearest reminder for fade animation
 
     // Voice input (Intent-based, works on all devices)
     private var isListening = false
     private var pendingVoiceCmdResult = false // true when expecting result for voice command flow
     private var isDrivingVoiceMode = false // true when recording voice for driving-mode reminder
+    private var menuPopup: android.widget.PopupWindow? = null
+    private lateinit var speechLauncher: androidx.activity.result.ActivityResultLauncher<Intent>
 
-    private val speechLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        isListening = false
-        resetVoiceButton()
-        if (result.resultCode == RESULT_OK) {
-            val matches = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            if (!matches.isNullOrEmpty()) {
-                if (isDrivingVoiceMode) {
-                    isDrivingVoiceMode = false
-                    binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
-                    saveDrivingModeReminder(matches[0])
-                } else if (pendingVoiceCmdResult) {
-                    pendingVoiceCmdResult = false
-                    handleVoiceCommandResult(matches[0])
-                } else {
-                    handleVoiceResult(matches[0])
-                }
-            } else if (voiceCmdState != VoiceCommandState.IDLE) {
-                // No match but still in command flow — retry
-                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                    if (voiceCmdState != VoiceCommandState.IDLE) startListeningForVoiceCommand()
-                }, 500)
-            } else if (isDrivingVoiceMode) {
-                isDrivingVoiceMode = false
-                binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
-            }
-        } else {
-            if (isDrivingVoiceMode) {
-                isDrivingVoiceMode = false
-                binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
-            }
-            // User cancelled or error — auto-restart in voice command flow
-            if (voiceCmdState != VoiceCommandState.IDLE) {
-                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                    if (voiceCmdState != VoiceCommandState.IDLE) {
-                        startListeningForVoiceCommand()
-                    }
-                }, 500)
-            }
-        }
-    }
 
     // Voice command state machine (driving mode)
     private enum class VoiceCommandState { IDLE, ASK_TEXT, ASK_RADIUS }
@@ -150,23 +115,18 @@ class MainActivity : AppCompatActivity() {
         //    el MapView lee Configuration al construirse)
         Configuration.getInstance().load(this, getSharedPreferences("osm", MODE_PRIVATE))
         // 2️⃣ User-Agent único para tu app (load() lo sobreescribe, por eso va después)
-        Configuration.getInstance().userAgentValue = "com.example.geomemorias2"
+        Configuration.getInstance().userAgentValue = "mx.ssauroncorp.ecos"
 
-        // XYTileSource de osmdroid construye la URL así:
-        //   baseUrl + zoom + "/" + x + "/" + y + imageFilenameEnding
-        // Por eso el ending es SOLO la extensión (".png") y el estilo "light_all/"
-        // va dentro de las URLs base. (Antes se pasaba "light_all/{z}/{x}/{y}.png"
-        // como ending y la URL quedaba malformada -> 404 -> mapa en blanco.)
-        val cartoPositron = XYTileSource(
-            "CartoDB Positron", 0, 19, 256,
+        // OpenStreetMap Mapnik — tiles gratuitos, sin API key
+        val osmMapnik = XYTileSource(
+            "Mapnik", 0, 19, 256,
             ".png",
             arrayOf(
-                "https://a.basemaps.cartocdn.com/light_all/",
-                "https://b.basemaps.cartocdn.com/light_all/",
-                "https://c.basemaps.cartocdn.com/light_all/",
-                "https://d.basemaps.cartocdn.com/light_all/"
+                "https://a.tile.openstreetmap.org/",
+                "https://b.tile.openstreetmap.org/",
+                "https://c.tile.openstreetmap.org/"
             ),
-            "© OpenStreetMap contributors, © CARTO"
+            "© OpenStreetMap contributors"
         )
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -176,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // 3️⃣ Fija tu tile source (pisará el Mapnik por defecto que restaura load())
-        binding.map.setTileSource(cartoPositron)
+        binding.map.setTileSource(osmMapnik)
 
         // 4️⃣ Descarga de tiles en background
         binding.map.setUseDataConnection(true)           // descarga en background
@@ -184,6 +144,34 @@ class MainActivity : AppCompatActivity() {
         db = AppDatabaseProvider.get(this)
         geofence = GeofenceHelper(this)
         NotificationHelper.ensureChannel(this)
+
+        // Initialize speech launcher for voice recognition (Google online)
+        speechLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val text = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull() ?: ""
+                if (text.isNotEmpty()) {
+                    isListening = false
+                    if (isDrivingVoiceMode) {
+                        isDrivingVoiceMode = false
+                        binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
+                        saveDrivingModeReminder(text)
+                    } else if (pendingVoiceCmdResult) {
+                        pendingVoiceCmdResult = false
+                        handleVoiceCommandResult(text)
+                    } else {
+                        handleVoiceResult(text)
+                    }
+                }
+            } else {
+                isListening = false
+                if (isDrivingVoiceMode) {
+                    isDrivingVoiceMode = false
+                    binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
+                }
+            }
+        }
 
         setupMap()
         setupDrawer()
@@ -275,6 +263,28 @@ class MainActivity : AppCompatActivity() {
         binding.drawerReminders.rvReminders.layoutManager = LinearLayoutManager(this)
         binding.drawerReminders.rvReminders.adapter = adapter
 
+        // Search filter — debounced via TextWatcher
+        binding.drawerReminders.etSearch.addTextChangedListener(
+            object : android.text.TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    adapter.filter(s?.toString() ?: "")
+                }
+                override fun afterTextChanged(s: android.text.Editable?) {}
+            }
+        )
+        // Show "no results" text when filter yields nothing
+        adapter.onEmptyResults = { empty ->
+            binding.drawerReminders.tvNoResults.visibility = if (empty) View.VISIBLE else View.GONE
+        }
+
+        // Clear search when drawer closes
+        drawerLayout.addDrawerListener(object : androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerClosed(drawerView: View) {
+                binding.drawerReminders.etSearch.setText("")
+            }
+        })
+
         binding.drawerReminders.btnCloseDrawer.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
@@ -302,9 +312,9 @@ class MainActivity : AppCompatActivity() {
             windowInsets
         }
 
-        // Hamburger menu → opens drawer
+        // Hamburger menu → opens menu bottom sheet
         binding.btnMenu.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
+            showMenuBottomSheet()
         }
 
         // Top list button → opens drawer
@@ -322,7 +332,7 @@ class MainActivity : AppCompatActivity() {
             centerMapOnCurrentLocation()
         }
 
-        // Bottom bar: Modo conducción
+        // Bottom bar: Modo Susurro
         binding.btnDrivingMode.setOnClickListener {
             toggleDrivingMode()
         }
@@ -405,7 +415,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadReminders() {
         lifecycleScope.launch {
             val reminders = db.reminderDao().getAll()
-            adapter.submitList(reminders)
+            adapter.submitFullList(reminders)
             updateMarkerMap(reminders)
         }
     }
@@ -456,6 +466,8 @@ class MainActivity : AppCompatActivity() {
         m.position = GeoPoint(r.lat, r.lng)
         m.title = r.text
         m.subDescription = getString(R.string.radius_prefix, r.radiusM)
+        m.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_echos_pin))
+        m.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         
         // Tap to show edit/delete options
         m.setOnMarkerClickListener { marker, _ ->
@@ -486,8 +498,8 @@ class MainActivity : AppCompatActivity() {
         val center = GeoPoint(r.lat, r.lng)
         val points = createCirclePoints(center, r.radiusM.toDouble())
         circle.points = points
-        circle.fillPaint.color = 0x224285F4.toInt() // Semi-transparent blue fill
-        circle.outlinePaint.color = 0xFF4285F4.toInt() // Blue outline
+        circle.fillPaint.color = 0x22FF6D00.toInt() // Semi-transparent orange fill (sunset)
+        circle.outlinePaint.color = 0xFFFF6D00.toInt() // Orange outline (sunset)
         circle.outlinePaint.strokeWidth = 4f
         circle.isVisible = true
         
@@ -1178,28 +1190,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
         if (isListening) return
-
         isDrivingVoiceMode = true
         pendingVoiceCmdResult = false
         isListening = true
         binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.VISIBLE
         binding.drivingModeOverlay.tvVoiceHint.text = getString(R.string.driving_voice_listening)
-
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 2000L)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 1500L)
-        }
-        try {
-            speechLauncher.launch(intent)
-        } catch (e: Exception) {
-            isListening = false
-            isDrivingVoiceMode = false
-            binding.drivingModeOverlay.voiceRecordingIndicator.visibility = View.GONE
-            Toast.makeText(this, R.string.toast_voice_not_supported, Toast.LENGTH_SHORT).show()
-        }
+        startGoogleSpeechRecognition()
     }
 
     private fun saveDrivingModeReminder(spokenText: String?) {
@@ -1336,22 +1332,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startListeningForVoiceCommand() {
-        if (isListening) return  // Guard against double-start
+        if (isListening) return
         pendingVoiceCmdResult = true
         isListening = true
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
-        }
-        try {
-            speechLauncher.launch(intent)
-        } catch (e: Exception) {
-            isListening = false
-            resetVoiceButton()
-            voiceCmdState = VoiceCommandState.IDLE
-            Toast.makeText(this, R.string.toast_voice_not_supported, Toast.LENGTH_SHORT).show()
-        }
+        startGoogleSpeechRecognition()
     }
 
     private fun handleVoiceCommandResult(text: String) {
@@ -1419,28 +1403,15 @@ class MainActivity : AppCompatActivity() {
             return
         }
         if (isListening) {
-            // Can't cancel Intent-based recognizer easily, just reset state
             resetVoiceButton()
             return
         }
         pendingVoiceCmdResult = false
         isListening = true
-        // Update popup voice button text if visible
         addReminderBottomSheet?.let {
             it.contentView.findViewById<com.google.android.material.button.MaterialButton>(R.id.btnPopupVoiceInput)?.text = getString(R.string.btn_voice_stop)
         }
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
-        }
-        try {
-            speechLauncher.launch(intent)
-        } catch (e: Exception) {
-            isListening = false
-            resetVoiceButton()
-            Toast.makeText(this, R.string.toast_voice_not_supported, Toast.LENGTH_SHORT).show()
-        }
+        startGoogleSpeechRecognition()
     }
 
     private fun resetVoiceButton() {
@@ -1452,15 +1423,58 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun startGoogleSpeechRecognition() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+        }
+        speechLauncher.launch(intent)
+    }
+
     private fun hasMicPermission(): Boolean {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
                 PackageManager.PERMISSION_GRANTED
     }
 
+    /** Check if device has internet connectivity (WiFi or mobile data). */
+    private fun hasInternet(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork ?: return false
+        val caps = cm.getNetworkCapabilities(network) ?: return false
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+               caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    }
+
+    private fun showMenuBottomSheet() {
+        menuPopup?.dismiss()
+
+        val popupView = layoutInflater.inflate(R.layout.popup_bottom_menu, null)
+
+        val popupWindow = android.widget.PopupWindow(
+            popupView,
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        ).apply {
+            isOutsideTouchable = true
+            isFocusable = true
+            elevation = 16f * resources.displayMetrics.density
+            showAsDropDown(binding.btnMenu, 0, 0, android.view.Gravity.BOTTOM)
+            setOnDismissListener { menuPopup = null }
+        }
+        menuPopup = popupWindow
+
+        // Close button
+        popupView.findViewById<android.widget.ImageButton>(R.id.btnCloseMenu).setOnClickListener {
+            popupWindow.dismiss()
+        }
+    }
+
     override fun onDestroy() {
         // Stop driving service if still running
         stopDrivingService()
-        // Shutdown TTS
+        // Shutdown TTS and speech recognition
         ttsManager.shutdown()
 
         super.onDestroy()

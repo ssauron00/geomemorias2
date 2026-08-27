@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.geomemorias2'
+    namespace 'mx.ssauroncorp.ecos'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.geomemorias2"
+        applicationId "mx.ssauroncorp.ecos"
         minSdk 28          // Android 9 (Pie) — requisito del usuario
         targetSdk 34
         versionCode 1
@@ -69,6 +69,10 @@ dependencies {
     // Android Auto — Car App Library
     implementation 'androidx.car.app:app:1.4.0'
     implementation 'androidx.car.app:app-projected:1.4.0'
+
+    // SpeechRecognizer nativo de Android — reconocimiento de voz
+    // API 31+: modo offline automático (createOnDeviceSpeechRecognizer)
+    // API < 31: requiere internet (Google online)
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

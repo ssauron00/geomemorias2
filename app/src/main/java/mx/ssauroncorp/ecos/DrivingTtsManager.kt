@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.content.Context
 import android.speech.tts.TextToSpeech

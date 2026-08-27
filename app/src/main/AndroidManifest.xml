@@ -11,10 +11,11 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Internet para descargar tiles del mapa (OSMDroid) -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Foreground Service para modo conducción en background (Android 9+) -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />        <!-- Foreground Service para Modo Susurro en background (Android 9+) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <!-- Foreground Service para Android Auto (CarAppService) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <!-- Para solicitar exención de optimización de batería -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
@@ -27,20 +28,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:theme="@style/Theme.Ecos"
         tools:targetApi="34">
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+            android:theme="@style/Theme.Ecos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Driving Mode Foreground Service -->
+        <!-- Modo Susurro Foreground Service -->
         <service
             android:name=".DrivingModeService"
             android:exported="false"
@@ -52,7 +53,7 @@
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="com.example.geomemorias2.ACTION_GEOFENCE" />
+                <action android:name="mx.ssauroncorp.ecos.ACTION_GEOFENCE" />
             </intent-filter>
         </receiver>
 
@@ -60,25 +61,31 @@
              Android Auto — Opción 2: Notificaciones automáticas
              Las notificaciones de geofence aparecen en la pantalla del auto
              ═══════════════════════════════════════════════════════════ -->
+        <!-- Descriptor de Android Auto: indica que la app usa templates -->
         <meta-data
-            android:name="com.google.android.gms.car.notification"
-            android:value="true" />
-
-        <meta-data
-            android:name="com.google.android.gms.car.APPLICATION_ID"
-            android:value="@string/app_id" />
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
 
         <!-- ═══════════════════════════════════════════════════════════
              Android Auto — Opción 1: Car App Library
              Servicio que muestra la lista de recordatorios en el auto
              ═══════════════════════════════════════════════════════════ -->
         <service
-            android:name=".GeomemoriasCarService"
+            android:name=".EcosCarService"
             android:exported="true"
-            android:label="@string/app_name">
+            android:foregroundServiceType="connectedDevice"
+            android:label="@string/app_name"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
+                <category android:name="androidx.car.app.category.POI" />
             </intent-filter>
+            <meta-data
+                android:name="androidx.car.app.minCarApiLevel"
+                android:value="1" />
+            <meta-data
+                android:name="androidx.car.app"
+                android:resource="@xml/car_service_config" />
         </service>
 
     </application>

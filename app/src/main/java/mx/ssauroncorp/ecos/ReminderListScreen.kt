@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.util.Log
 import androidx.car.app.CarContext
@@ -8,12 +8,8 @@ import androidx.car.app.model.ActionStrip
 import androidx.car.app.model.ItemList
 import androidx.car.app.model.ListTemplate
 import androidx.car.app.model.Row
-import androidx.car.app.model.SectionedItemList
 import androidx.car.app.model.Template
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -23,7 +19,7 @@ import kotlinx.coroutines.launch
  * Cada fila muestra: título del recordatorio, distancia, radio.
  * Click en una fila abre el detalle (PaneTemplate).
  *
- * Se actualiza periódicamente para mostrar distancias en tiempo real.
+ * Se calcula la distancia solo al abrir la lista. El botón 🔄 permite refrescar manualmente.
  */
 class ReminderListScreen(carContext: CarContext) : Screen(carContext) {
 
@@ -32,16 +28,8 @@ class ReminderListScreen(carContext: CarContext) : Screen(carContext) {
     private var currentLng: Double = 0.0
 
     init {
+        // Carga única al abrir la lista (sin auto-refresh para no pegar al performance)
         loadData()
-        // Auto-refresh cada 10s solo mientras el screen está en primer plano
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                while (true) {
-                    delay(10_000)
-                    loadData()
-                }
-            }
-        }
     }
 
     private fun loadData() {
@@ -93,24 +81,10 @@ class ReminderListScreen(carContext: CarContext) : Screen(carContext) {
                 .build()
         }
 
-        val itemList = if (rows.isNotEmpty()) {
-            ItemList.Builder()
-                .apply { rows.forEach { addItem(it) } }
-                .build()
-        } else {
-            ItemList.Builder()
-                .addItem(
-                    Row.Builder()
-                        .setTitle(carContext.getString(R.string.car_empty_list))
-                        .build()
-                )
-                .build()
-        }
-
-        val sectionedList = SectionedItemList.create(
-            itemList,
-            carContext.getString(R.string.car_list_title)
-        )
+        val itemList = ItemList.Builder()
+            .apply { rows.forEach { addItem(it) } }
+            .setNoItemsMessage(carContext.getString(R.string.car_empty_list))
+            .build()
 
         val actionStrip = ActionStrip.Builder()
             .addAction(
@@ -123,8 +97,8 @@ class ReminderListScreen(carContext: CarContext) : Screen(carContext) {
 
         return ListTemplate.Builder()
             .setTitle(carContext.getString(R.string.car_list_title))
-            .setHeaderAction(Action.BACK)
-            .addSectionedList(sectionedList)
+            .setHeaderAction(Action.APP_ICON)
+            .setSingleList(itemList)
             .setActionStrip(actionStrip)
             .build()
     }

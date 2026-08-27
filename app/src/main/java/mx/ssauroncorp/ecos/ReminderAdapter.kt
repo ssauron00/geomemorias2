@@ -1,11 +1,11 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.geomemorias2.databinding.ItemReminderBinding
+import mx.ssauroncorp.ecos.databinding.ItemReminderBinding
 import java.text.DecimalFormat
 
 class ReminderAdapter(
@@ -14,10 +14,42 @@ class ReminderAdapter(
 ) : ListAdapter<Reminder, ReminderAdapter.ReminderViewHolder>(ReminderDiffCallback()) {
 
     private var currentLocations: Map<String, Pair<Double, Double>> = emptyMap()
+    private var allReminders: List<Reminder> = emptyList()
 
     fun updateLocations(locations: Map<String, Pair<Double, Double>>) {
         currentLocations = locations
         notifyDataSetChanged()
+    }
+
+    var onEmptyResults: ((Boolean) -> Unit)? = null
+
+    /** Update the master list and apply any active filter. */
+    fun submitFullList(list: List<Reminder>) {
+        allReminders = list
+        applyFilter(currentQuery)
+    }
+
+    private var currentQuery: String = ""
+
+    /** Filter by text (case-insensitive on title + radius). */
+    fun filter(query: String) {
+        currentQuery = query
+        applyFilter(query)
+    }
+
+    private fun applyFilter(query: String) {
+        if (query.isBlank()) {
+            onEmptyResults?.invoke(false)
+            submitList(allReminders.toList())
+            return
+        }
+        val q = query.trim().lowercase()
+        val filtered = allReminders.filter { r ->
+            r.text.lowercase().contains(q) ||
+            r.radiusM.toString().contains(q)
+        }
+        onEmptyResults?.invoke(filtered.isEmpty())
+        submitList(filtered)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {

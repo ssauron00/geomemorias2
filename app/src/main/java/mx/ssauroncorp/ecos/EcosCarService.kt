@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.content.Intent
 import androidx.car.app.CarAppService
@@ -6,20 +6,20 @@ import androidx.car.app.Session
 import androidx.car.app.validation.HostValidator
 
 /**
- * GeomemoriasCarService — punto de entrada para Android Auto.
+ * EcosCarService — punto de entrada para Android Auto.
  *
- * Cuando el usuario conecta el teléfono al auto y abre Geomemorias,
+ * Cuando el usuario conecta el teléfono al auto y abre Ecos,
  * Android Auto llama a este servicio para mostrar la lista de recordatorios
  * en la pantalla del auto.
  *
  * Requiere en AndroidManifest.xml:
- *   <service android:name=".GeomemoriasCarService" android:exported="true">
+ *   <service android:name=".EcosCarService" android:exported="true">
  *     <intent-filter>
  *       <action android:name="androidx.car.app.CarAppService" />
  *     </intent-filter>
  *   </service>
  */
-class GeomemoriasCarService : CarAppService() {
+class EcosCarService : CarAppService() {
 
     override fun createHostValidator(): HostValidator = HostValidator.ALLOW_ALL_HOSTS_VALIDATOR
 
