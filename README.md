@@ -16,9 +16,11 @@ valida proximidad y notifica (regla de oro heredada de v1).
 - Kotlin + Android Gradle Plugin 8.2
 - minSdk 28, targetSdk 34
 - Room (persistencia local, device-only)
-- OSMDroid (mapa open-source, sin API key)
+- OSMDroid 6.1.18 (mapa open-source, sin API key)
 - Play Services Location (Geofencing)
-- WorkManager (fallback de proximidad para dispositivos sin GMS)
+- Android Auto Car App Library 1.4.0
+- Foreground Service + TTS (modo conducción)
+- SpeechRecognizer (comando de voz)
 
 ## Cómo abrir y correr (en tu máquina con Android Studio)
 1. Abre Android Studio → "Open" → esta carpeta (geomemorias2).
@@ -38,24 +40,48 @@ geomemorias2/
 │   └── src/main/
 │       ├── AndroidManifest.xml
 │       ├── java/com/example/geomemorias2/
-│       │   ├── MainActivity.kt          UI: mapa OSMDroid + captura
-│       │   ├── Reminder.kt              modelo (Room @Entity)
-│       │   ├── ReminderDao.kt           acceso a datos
-│       │   ├── AppDatabase.kt           Room DB
-│       │   ├── AppDatabaseProvider.kt   singleton
-│       │   ├── GeoUtils.kt              haversine + histeresis + polling
-│       │   ├── GeofenceHelper.kt        registra geocercas (Play Services)
-│       │   ├── GeofenceBroadcastReceiver.kt  evento ENTER/EXIT
-│       │   └── NotificationHelper.kt    canal + notificación
-│       └── res/  (layout, values, mipmap, drawable)
+│       │   ├── MainActivity.kt              UI principal: mapa OSMDroid + captura
+│       │   ├── Reminder.kt                  modelo (Room @Entity)
+│       │   ├── ReminderDao.kt               acceso a datos (Room)
+│       │   ├── AppDatabase.kt               Room DB
+│       │   ├── AppDatabaseProvider.kt       singleton DB
+│       │   ├── ReminderAdapter.kt           RecyclerView adapter para lista
+│       │   ├── GeoUtils.kt                  haversine + histeresis + polling
+│       │   ├── GeofenceHelper.kt            registra geocercas (Play Services)
+│       │   ├── GeofenceBroadcastReceiver.kt evento ENTER/EXIT
+│       │   ├── NotificationHelper.kt        canal + notificación
+│       │   ├── DrivingModeService.kt        Foreground Service (modo conducción)
+│       │   ├── DrivingTtsManager.kt         Controlador TTS centralizado
+│       │   ├── GeomemoriasCarService.kt     Entry point Android Auto
+│       │   ├── ReminderListScreen.kt        Pantalla lista Android Auto
+│       │   └── ReminderDetailScreen.kt      Pantalla detalle Android Auto
+│       └── res/
+│           ├── layout/    (8 layouts XML)
+│           ├── values/    (strings, colors, themes)
+│           ├── drawable/  (iconos vectoriales)
+│           ├── mipmap-anydpi-v26/  (adaptive icon)
+│           ├── anim/      (FAB animations)
+│           └── menu/      (menú opciones)
 ├── local.properties (tu SDK, no subir)
 ├── BRIEF.md / to_do.txt
 └── README.md
 ```
 
-## Pendiente / siguiente paso sugerido
-- Verificar en tu dispositivo Android 9+: al guardar y acercarte al punto, llega
-  la notificación (geofence ENTER). Al alejarte > radio, el flag se resetea.
-- Ajustar UI (lista lateral, borrar, editar radio después de guardar).
-- Modo conducción (TTS) — era pendiente de v1.
-- Fallback WorkManager para dispositivos sin Google Play Services.
+## Funcionalidades implementadas
+- ✅ Geofencing con notificaciones al entrar/salir del radio
+- ✅ Lista lateral de recordatorios con distancia en tiempo real
+- ✅ Borrar y editar recordatorios (radio, texto)
+- ✅ Botón "Mi ubicación" con marcador azul en tiempo real
+- ✅ Círculos de radio visualizados en el mapa
+- ✅ Modo conducción: TTS al estar dentro del radio
+- ✅ Foreground Service para segundo plano
+- ✅ Comando de voz para captura (SpeechRecognizer)
+- ✅ Mock de ubicación para pruebas sin moverse
+- ✅ Android Auto: lista + detalle de recordatorios
+- ✅ Persistencia de geocercas al reiniciar la app
+
+## Pendiente
+- Verificar geofencing en dispositivo real (Android 9+) — en VM no se pudo probar (sin GPS ni Play Services)
+- Fallback WorkManager para dispositivos sin Google Play Services
+- ProGuard release + firma APK
+- Probar notificaciones en Android Auto

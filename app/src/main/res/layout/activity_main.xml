@@ -1,34 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="false">
 
-    <org.osmdroid.views.MapView
-        android:id="@+id/map"
+    <!-- Main content: everything floats over the map -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etText"
+        <!-- Map full screen (behind everything) -->
+        <org.osmdroid.views.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- ═══════════════════════════════════════════
+             TOP BAR — floating overlay with glass effect
+             ═══════════════════════════════════════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="4dp">
+
+                <ImageButton
+                    android:id="@+id/btnMenu"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/btn_show_list"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/app_name"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btnTopList"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/btn_show_list"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    android:scaleType="centerInside"
+                    app:tint="?attr/colorPrimary" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══════════════════════════════════════════
+             BOTTOM ACTION BAR — floating glass card
+             ═══════════════════════════════════════════ -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottomActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="64dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp">
+
+                <!-- Lista -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBottomList"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_show_list"
+                    android:textAllCaps="false"
+                    app:icon="@android:drawable/ic_menu_agenda"
+                    app:iconGravity="textStart"
+                    app:iconTint="?attr/colorPrimary"
+                    android:textColor="?attr/colorPrimary" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="32dp"
+                    android:background="#E0E0E0" />
+
+                <!-- Mi ubicación -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMyLocation"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_my_location_short"
+                    android:textAllCaps="false"
+                    app:icon="@android:drawable/ic_menu_mylocation"
+                    app:iconGravity="textStart"
+                    app:iconTint="?attr/colorPrimary"
+                    android:textColor="?attr/colorPrimary" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="32dp"
+                    android:background="#E0E0E0" />
+
+                <!-- Modo Susurro -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDrivingMode"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_driving_mode_short"
+                    android:textAllCaps="false"
+                    app:icon="@android:drawable/ic_menu_directions"
+                    app:iconGravity="textStart"
+                    app:iconTint="#FF4285F4"
+                    android:textColor="#FF4285F4" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ═══════════════════════════════════════════
+             FAB — add reminder (bottom-right)
+             ═══════════════════════════════════════════ -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="96dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/btn_add_reminder"
+            app:backgroundTint="#FF4285F4"
+            app:tint="#FFFFFF"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            app:fabSize="normal"
+            app:elevation="12dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- ═══════════════════════════════════════════
+         DRIVING MODE OVERLAY (hidden by default)
+         ═══════════════════════════════════════════ -->
+    <FrameLayout
+        android:id="@+id/drivingOverlayWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Texto del recordatorio"
-        android:inputType="text" />
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone">
 
-    <EditText
-        android:id="@+id/etRadius"
+        <include
+            android:id="@+id/drivingModeOverlay"
+            layout="@layout/overlay_driving_mode" />
+    </FrameLayout>
+
+    <!-- ═══════════════════════════════════════════
+         DRIVING MODE FABs (hidden by default)
+         ═══════════════════════════════════════════ -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Radio en metros"
-        android:inputType="number" />
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false">
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Guardar recordatorio en el punto del mapa" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDrivingVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_marginTop="120dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/driving_btn_voice"
+            android:elevation="16dp"
+            android:translationZ="4dp"
+            android:visibility="gone"
+            app:backgroundTint="#CC1A1A2E"
+            app:tint="#FFFFFF"
+            app:srcCompat="@android:drawable/ic_btn_speak_now"
+            app:fabSize="normal" />
 
-</LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDrivingAddReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/driving_btn_add_reminder"
+            android:elevation="16dp"
+            android:translationZ="4dp"
+            android:visibility="gone"
+            app:backgroundTint="#CC4285F4"
+            app:tint="#FFFFFF"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            app:fabSize="normal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDrivingMyLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/btn_my_location"
+            android:elevation="16dp"
+            android:translationZ="4dp"
+            android:visibility="gone"
+            app:backgroundTint="#CC1A1A2E"
+            app:tint="#FFFFFF"
+            app:srcCompat="@android:drawable/ic_menu_mylocation"
+            app:fabSize="normal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabDrivingExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/btn_exit_driving_mode"
+            android:elevation="16dp"
+            android:translationZ="4dp"
+            android:visibility="gone"
+            app:backgroundTint="#CCEE4444"
+            app:tint="#FFFFFF"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            app:fabSize="normal" />
+    </FrameLayout>
+
+    <!-- ═══════════════════════════════════════════
+         DRAWER — reminders list
+         ═══════════════════════════════════════════ -->
+    <LinearLayout
+        android:id="@+id/drawerContent"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?android:attr/colorBackground"
+        android:orientation="vertical"
+        android:elevation="16dp">
+
+        <include
+            android:id="@+id/drawerReminders"
+            layout="@layout/drawer_reminders" />
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

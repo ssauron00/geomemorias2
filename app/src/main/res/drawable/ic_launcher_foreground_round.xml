@@ -1,0 +1,115 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Deep night sky -->
+    <path
+        android:fillColor="#0D1B2A"
+        android:pathData="M0,0 L108,0 L108,108 L0,108 Z" />
+
+    <!-- Horizon line (road) -->
+    <path
+        android:fillColor="#1B2838"
+        android:pathData="M0,70 L108,70 L108,108 L0,108 Z" />
+
+    <!-- Road center dashes -->
+    <path android:fillColor="#3E4C5E" android:pathData="M50,70 L58,70 L58,78 L50,78 Z" />
+    <path android:fillColor="#3E4C5E" android:pathData="M50,84 L58,84 L58,92 L50,92 Z" />
+    <path android:fillColor="#3E4C5E" android:pathData="M50,98 L58,98 L58,106 L50,106 Z" />
+
+    <!-- Wave 5 (outermost) - deep purple -->
+    <path
+        android:strokeColor="#4A148C"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,22 C70.5,22 84,35.5 84,52" />
+
+    <path
+        android:strokeColor="#4A148C"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M24,52 C24,35.5 37.5,22 54,22" />
+
+    <!-- Wave 4 - purple -->
+    <path
+        android:strokeColor="#7B1FA2"
+        android:strokeWidth="3.0"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,28 C67.2,28 78,38.8 78,52" />
+
+    <path
+        android:strokeColor="#7B1FA2"
+        android:strokeWidth="3.0"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M30,52 C30,38.8 40.8,28 54,28" />
+
+    <!-- Wave 3 - deep orange -->
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="3.4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,34 C64.5,34 73,42.5 73,52" />
+
+    <path
+        android:strokeColor="#E65100"
+        android:strokeWidth="3.4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M35,52 C35,42.5 43.5,34 54,34" />
+
+    <!-- Wave 2 - orange -->
+    <path
+        android:strokeColor="#FF6D00"
+        android:strokeWidth="3.6"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,40 C61,40 67,46 67,52" />
+
+    <path
+        android:strokeColor="#FF6D00"
+        android:strokeWidth="3.6"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M41,52 C41,46 47,40 54,40" />
+
+    <!-- Wave 1 (innermost) - amber/gold -->
+    <path
+        android:strokeColor="#FFB300"
+        android:strokeWidth="4.0"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,46 C58.4,46 62,49.6 62,52" />
+
+    <path
+        android:strokeColor="#FFB300"
+        android:strokeWidth="4.0"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M46,52 C46,49.6 49.6,46 54,46" />
+
+    <!-- Center dot - bright amber core -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M54,52m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
+
+    <!-- Center glow -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M54,52m-2.5,0a2.5,2.5 0,1 1,5 0a2.5,2.5 0,1 1,-5 0" />
+
+    <!-- Stars -->
+    <path android:fillColor="#FFFFFF" android:pathData="M18,18m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0" />
+    <path android:fillColor="#FFFFFF" android:pathData="M90,15m-1,0a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" />
+    <path android:fillColor="#E0E0E0" android:pathData="M12,40m-0.7,0a0.7,0.7 0,1 1,1.4 0a0.7,0.7 0,1 1,-1.4 0" />
+    <path android:fillColor="#E0E0E0" android:pathData="M95,38m-0.6,0a0.6,0.6 0,1 1,1.2 0a0.6,0.6 0,1 1,-1.2 0" />
+    <path android:fillColor="#FFFFFF" android:pathData="M28,10m-0.8,0a0.8,0.8 0,1 1,1.6 0a0.8,0.8 0,1 1,-1.6 0" />
+    <path android:fillColor="#E0E0E0" android:pathData="M80,22m-0.6,0a0.6,0.6 0,1 1,1.2 0a0.6,0.6 0,1 1,-1.2 0" />
+
+</vector>

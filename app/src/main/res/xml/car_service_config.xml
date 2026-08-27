@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- car_service_config.xml — Configuración de Android Auto (Car App Library)
+     Requerido por AndroidManifest.xml → <meta-data android:resource="@xml/car_service_config" />
+     Documentación: https://developer.android.com/training/cars/app/large-screen-apps -->
+<automotiveApp>
+    <uses name="template" />
+</automotiveApp>

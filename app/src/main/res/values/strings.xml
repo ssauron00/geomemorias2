@@ -1,4 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Geomemorias2</string>
+    <string name="app_name">Ecos</string>
+    <string name="app_id">mx.ssauroncorp.ecos</string>
+    
+    <!-- Notification -->
+    <string name="notif_title">📍 Ecos</string>
+    <string name="notif_channel_name">Recordatorios por ubicación</string>
+    <string name="notif_channel_desc">Avisos al entrar en el radio de un recordatorio</string>
+    
+    <!-- Main Activity -->
+    <string name="hint_reminder_text">Texto del recordatorio</string>
+    <string name="hint_radius">Radio en metros</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_show_list">Lista</string>
+    <string name="btn_my_location_short">Ubicación</string>
+    <string name="btn_driving_mode_short">Susurro</string>
+    <string name="btn_add_reminder">Agregar recordatorio</string>
+    
+    <!-- Drawer -->
+    <string name="drawer_title">Recordatorios</string>
+    <string name="search_hint">Buscar recordatorio…</string>
+    <string name="no_results">Sin resultados</string>
+    <string name="btn_close_drawer">Cerrar</string>
+    
+    <!-- Reminder Item -->
+    <string name="default_reminder_text">Recordatorio</string>
+    <string name="distance_prefix">Distancia: %s</string>
+    <string name="distance_not_available">Distancia: --</string>
+    <string name="radius_prefix">Radio: %dm</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_delete">Borrar</string>
+    
+    <!-- Toast Messages -->
+    <string name="toast_location_required">Se requiere ubicación</string>
+    <string name="toast_tap_to_locate">Toca el mapa para agregar recordatorio</string>
+    <string name="toast_geofence_error">Geo: %s</string>
+    <string name="toast_reminder_saved">Guardado y geocerca activa</string>
+    <string name="toast_invalid_radius">Radio inválido</string>
+    <string name="toast_radius_updated">Radio actualizado a %dm</string>
+    <string name="toast_geofence_removal_error">Error al quitar geocerca: %s</string>
+    <string name="toast_reminder_deleted">Recordatorio borrado</string>
+    
+    <!-- Dialogs -->
+    <string name="dialog_edit_title">Editar recordatorio</string>
+    <string name="dialog_edit_radius_title">Editar radio</string>
+    <string name="dialog_edit_radius_message">Recordatorio: %s</string>
+    <string name="dialog_edit_text_hint">Texto del recordatorio</string>
+    <string name="dialog_edit_radius_hint">Radio en metros</string>
+    <string name="dialog_new_radius_hint">Nuevo radio en metros</string>
+    <string name="dialog_save">Guardar</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="toast_reminder_updated">Recordatorio actualizado</string>
+    <string name="error_empty_text">El texto no puede estar vacío</string>
+    <string name="dialog_delete_title">Borrar recordatorio</string>
+    <string name="dialog_delete_message">¿Estás seguro de borrar \'%s\'?</string>
+    <string name="dialog_delete_confirm">Borrar</string>
+    <string name="dialog_marker_options_edit">Editar radio</string>
+    <string name="dialog_marker_options_delete">Borrar recordatorio</string>
+    <string name="dialog_edit_change_location">📍 Cambiar ubicación</string>
+    <string name="dialog_edit_location_mode">📍 Modo edición: toca el mapa para mover el recordatorio</string>
+    
+    <!-- Map -->
+    <string name="marker_hint">Recordatorio en %1$.4f, %2$.4f</string>
+    <string name="btn_my_location">📍 Mi ubicación</string>
+    <string name="toast_location_not_available">Ubicación no disponible</string>
+    
+    <!-- Driving Mode -->
+    <string name="btn_driving_mode">🎤 Modo Susurro</string>
+    <string name="btn_exit_driving_mode">Salir del Modo Susurro</string>
+    <string name="driving_mode_active">Modo Susurro activo</string>
+    <string name="driving_mode_inactive">Modo Susurro inactivo</string>
+    <string name="driving_mode_reminder_text">Recordatorio: %s</string>
+    <string name="driving_mode_radius">Radio: %dm</string>
+    <string name="driving_mode_distance">Distancia: %s</string>
+    <string name="driving_mode_no_reminders">No hay recordatorios cercanos</string>
+    <string name="driving_btn_voice">🎤 Hablar</string>
+    <string name="driving_btn_add_reminder">📌 Fijar punto</string>
+    <string name="driving_voice_listening">🎤 Di tu recordatorio…</string>
+    <string name="driving_voice_recording_done">Grabación capturada, guardando…</string>
+    <string name="driving_point_saved">Punto fijado: %s</string>
+    <string name="driving_voice_saved">"%1$s" guardado con radio %2$dm</string>
+    <string name="driving_no_location">No hay ubicación disponible</string>
+    
+    <!-- Mock Location -->
+    <string name="btn_mock_location">📍 Mock</string>
+    <string name="mock_mode_active">Modo Mock activo: toca el mapa para fijar ubicación</string>
+    <string name="mock_mode_inactive">Modo Mock desactivado: usando GPS real</string>
+    <string name="mock_location_set">Ubicación mock: %1$.4f, %2$.4f</string>
+    <string name="mock_location_disabled">Modo Mock desactivado</string>
+    
+    <!-- Voice Input -->
+    <string name="btn_voice_input">🎤</string>
+    <string name="btn_voice_stop">⏹</string>
+    
+    <!-- Bottom Sheet / Popup -->
+    <string name="popup_add_reminder_title">Agregar Recordatorio</string>
+    <string name="popup_tap_map_hint">Toca el mapa para ubicar</string>
+    <string name="btn_close_popup">Cerrar</string>
+    <string name="toast_tap_map_first">Toca el mapa para seleccionar ubicación</string>
+    <string name="toast_voice_listening">Escuchando...</string>
+    <string name="toast_voice_error">Error al reconocer voz</string>
+    <string name="toast_voice_not_supported">Reconocimiento de voz no disponible</string>
+    <string name="toast_voice_no_internet">Se requiere conexión a internet para dictado. Escribe tu recordatorio manualmente.</string>
+    <string name="vc_no_internet">No hay conexión a internet. Escribe tu recordatorio manualmente.</string>
+    <string name="driving_voice_offline">🎤 Di tu recordatorio (modo offline)…</string>
+    <string name="toast_vosk_loading">Cargando modelo de voz offline…</string>
+    <string name="vc_using_offline">Usando reconocimiento offline.</string>
+    
+    <!-- Voice Command (Driving Mode) -->
+    <string name="vc_listening">Escuchando comando...</string>
+    <string name="vc_ask_text">¿Qué quieres recordar?</string>
+    <string name="vc_ask_radius">¿Radio en metros? Di un número o "default" para cien metros.</string>
+    <string name="vc_saved">Recordatorio guardado: %1$s, radio %2$d metros.</string>
+    <string name="vc_no_location">No tengo ubicación actual. Intenta de nuevo.</string>
+    <string name="vc_invalid_radius">Radio no entendido. Usando cien metros.</string>
+    <string name="vc_cancelled">Creación cancelada.</string>
+    
+    <!-- Battery Optimization -->
+    <string name="battery_opt_title">Optimización de batería</string>
+    <string name="battery_opt_message">Android está restringiendo Ecos en segundo plano. Las alertas por voz podrían detenerse al bloquear la pantalla.\n\n¿Quieres desactivar la restricción para que el Modo Susurro funcione correctamente?</string>
+    <string name="battery_opt_open">Configuración</string>
+    <string name="battery_opt_dismiss">Ahora no</string>
+    
+    <!-- Driving Mode Reminder Popup -->
+    <string name="driving_mode_reminder_alert">📍 Recordatorio cercano</string>
+    <string name="driving_popup_silence">🔕 Silenciar</string>
+    <string name="driving_popup_delete">🗑️ Eliminar</string>
+
+    <!-- Menu -->
+    <string name="menu_title">Menú</string>
+    <string name="menu_info_title">📍 Ecos</string>
+    <string name="menu_info_description">Recordatorios por ubicación para conductor y peatón.\n\nCrea geocercas en tu mapa y recibe alertas por voz cuando te acerques a un punto importante. Diseñado para uso seguro mientras conduces.</string>
+    <string name="menu_info_version">Versión 0.1.0</string>
+    <string name="menu_info_developer">Desarrollado por Sauron Corp</string>
+    <string name="menu_info_maps">Mapas: OpenStreetMap contributors</string>
+
+    <!-- Android Auto -->
+    <string name="car_list_title">📍 Mis Recordatorios</string>
+    <string name="car_empty_list">No hay recordatorios</string>
+    <string name="car_distance">%.0fm</string>
+    <string name="car_radius">Radio %dm</string>
+    <string name="car_no_distance">Sin distancia</string>
+    <string name="car_detail_title">Detalle del recordatorio</string>
+    <string name="car_detail_text">%s</string>
+    <string name="car_detail_radius">Radio: %dm</string>
+    <string name="car_detail_coords">%1$.4f, %2$.4f</string>
+    <string name="car_detail_notification">Notificación: %s</string>
+    <string name="car_detail_yes">Sí</string>
+    <string name="car_detail_no">No</string>
 </resources>

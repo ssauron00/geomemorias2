@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_primary">#4285F4</color>
+    <!-- Ecos brand - Sunset / Night Road palette -->
+    <color name="ecos_primary">#FF6D00</color>
+    <color name="ecos_primary_dark">#E65100</color>
+    <color name="ecos_accent">#FFB300</color>
+    <color name="ecos_night">#0D1B2A</color>
+    <color name="ecos_purple">#7B1FA2</color>
+    <color name="ecos_launcher_background">#0D1B2A</color>
+</resources>

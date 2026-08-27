@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import androidx.room.Dao
 import androidx.room.Delete

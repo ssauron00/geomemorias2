@@ -1,4 +1,4 @@
-package com.example.geomemorias2
+package mx.ssauroncorp.ecos
 
 import android.Manifest
 import android.content.Context
@@ -38,7 +38,7 @@ class GeofenceHelper(private val context: Context) {
             .addGeofence(buildGeofence(r))
             .build()
         val intent = android.content.Intent(context, GeofenceBroadcastReceiver::class.java)
-            .setAction("com.example.geomemorias2.ACTION_GEOFENCE")
+            .setAction("mx.ssauroncorp.ecos.ACTION_GEOFENCE")
         val pi = android.app.PendingIntent.getBroadcast(
             context, 0, intent,
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_MUTABLE

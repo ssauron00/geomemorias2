@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geomemorias2 — Presentación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <style>
+        /* Custom styles for Geomemorias2 presentation */
+        :root {
+            --r-background-color: #0a0a0a;
+            --r-main-font: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --r-heading-font: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --r-main-color: #e0e0e0;
+            --r-heading-color: #ffffff;
+        }
+
+        .reveal {
+            font-family: var(--r-main-font);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-weight: 600;
+            text-transform: none;
+        }
+
+        .reveal h1 { font-size: 2.2em; }
+        .reveal h2 { font-size: 1.6em; color: #4fc3f7; }
+        .reveal h3 { font-size: 1.3em; color: #81d4fa; }
+
+        .reveal .slide-number {
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Title slide */
+        .title-slide h1 {
+            font-size: 2.8em;
+            background: linear-gradient(135deg, #4fc3f7, #29b6f6, #03a9f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.2em;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.1em;
+            color: #90a4ae;
+            margin-bottom: 1em;
+        }
+
+        .title-slide .emoji-icon {
+            font-size: 4em;
+            margin-bottom: 0.3em;
+        }
+
+        /* Feature cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-top: 0.5em;
+        }
+
+        .feature-card {
+            background: rgba(79, 195, 247, 0.1);
+            border: 1px solid rgba(79, 195, 247, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(79, 195, 247, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 0.9em;
+            margin: 0 0 8px 0;
+            color: #4fc3f7;
+        }
+
+        .feature-card p {
+            font-size: 0.7em;
+            margin: 0;
+            color: #b0bec5;
+        }
+
+        /* Use case cards */
+        .use-case {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            text-align: left;
+            border-left: 4px solid #4fc3f7;
+        }
+
+        .use-case h3 {
+            font-size: 0.85em;
+            color: #4fc3f7;
+            margin: 0 0 5px 0;
+        }
+
+        .use-case p {
+            font-size: 0.65em;
+            color: #b0bec5;
+            margin: 0;
+        }
+
+        /* Tech stack */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 0.5em;
+        }
+
+        .tech-item {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(79, 195, 247, 0.2);
+        }
+
+        .tech-item .emoji {
+            font-size: 1.8em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .tech-item .name {
+            font-size: 0.65em;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        /* Architecture layers */
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .arch-layer:hover {
+            transform: translateX(10px);
+            background: rgba(79, 195, 247, 0.1);
+        }
+
+        .arch-layer .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .arch-layer .content h3 {
+            font-size: 0.8em;
+            margin: 0;
+            color: #4fc3f7;
+        }
+
+        .arch-layer .content p {
+            font-size: 0.6em;
+            margin: 3px 0 0 0;
+            color: #90a4ae;
+        }
+
+        /* Differentiator list */
+        .diff-list {
+            text-align: left;
+            margin-top: 0.3em;
+        }
+
+        .diff-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #4caf50;
+        }
+
+        .diff-item .number {
+            font-size: 1.2em;
+            color: #4caf50;
+            margin-right: 15px;
+            font-weight: 700;
+        }
+
+        .diff-item .text {
+            font-size: 0.7em;
+            line-height: 1.4;
+        }
+
+        .diff-item .text strong {
+            color: #81c784;
+        }
+
+        /* Status check */
+        .status-section {
+            text-align: left;
+            margin-top: 0.3em;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            font-size: 0.7em;
+        }
+
+        .status-item.done { color: #4caf50; }
+        .status-item.pending { color: #ff9800; }
+
+        .status-item .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Closing slide */
+        .closing-quote {
+            font-style: italic;
+            font-size: 1.1em;
+            color: #4fc3f7;
+            border-left: 3px solid #4fc3f7;
+            padding-left: 20px;
+            margin: 0.5em 0;
+            text-align: left;
+        }
+
+        /* Speaker notes */
+        .reveal .speaker-notes {
+            font-size: 0.7em;
+        }
+
+        /* Animations */
+        .reveal .fragment.fade-up {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .reveal .fragment.fade-up.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Progress bar color */
+        .reveal .progress {
+            color: #4fc3f7;
+            height: 4px;
+        }
+
+        /* Slide background gradient */
+        .reveal .slides section {
+            padding: 40px;
+        }
+
+        /* Driving mode demo box */
+        .demo-box {
+            background: rgba(76, 175, 80, 0.15);
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 0.5em;
+        }
+
+        .demo-box h3 {
+            color: #81c784 !important;
+            font-size: 0.9em;
+        }
+
+        .demo-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .demo-feature {
+            font-size: 0.65em;
+            color: #a5d6a7;
+        }
+
+        .demo-feature .emoji {
+            margin-right: 8px;
+        }
+
+        /* Android Auto mockup */
+        .auto-mockup {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 0.5em;
+            border: 2px solid #3f51b5;
+        }
+
+        .auto-mockup h3 {
+            color: #7986cb !important;
+        }
+
+        .auto-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .auto-feature {
+            font-size: 0.65em;
+            color: #9fa8da;
+        }
+
+        /* Summary box */
+        .summary-box {
+            background: linear-gradient(135deg, rgba(79, 195, 247, 0.2), rgba(3, 169, 244, 0.2));
+            border: 1px solid rgba(79, 195, 247, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: left;
+        }
+
+        .summary-row {
+            display: flex;
+            margin: 10px 0;
+            font-size: 0.75em;
+        }
+
+        .summary-label {
+            color: #4fc3f7;
+            font-weight: 600;
+            width: 150px;
+        }
+
+        .summary-value {
+            color: #e0e0e0;
+        }
+
+        /* Thank you slide */
+        .thank-you {
+            text-align: center;
+        }
+
+        .thank-you h1 {
+            font-size: 3em;
+            margin-bottom: 0.3em;
+        }
+
+        .thank-you .repo {
+            font-size: 0.9em;
+            color: #4fc3f7;
+            margin-top: 1em;
+        }
+
+        .thank-you .links {
+            margin-top: 0.5em;
+            font-size: 0.7em;
+            color: #90a4ae;
+        }
+
+        /* Problem section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 0.5em;
+        }
+
+        .problem-card {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .problem-card .emoji {
+            font-size: 2em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .problem-card p {
+            font-size: 0.7em;
+            color: #ef9a9a;
+            margin: 0;
+        }
+
+        /* Solution highlight */
+        .solution-highlight {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2));
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 0.5em;
+        }
+
+        .solution-highlight p {
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .highlight-text {
+            color: #81c784;
+            font-weight: 600;
+        }
+
+        /* How it works steps */
+        .steps {
+            text-align: left;
+            margin-top: 0.5em;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(79, 195, 247, 0.15);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #4fc3f7, #03a9f4);
+            color: #000;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8em;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 0.75em;
+            color: #e0e0e0;
+        }
+
+        /* Footer notes */
+        .slide-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.5em;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .feature-grid,
+            .tech-grid,
+            .problem-grid,
+            .demo-features,
+            .auto-features {
+                grid-template-columns: 1fr;
+            }
+
+            .reveal h1 { font-size: 1.8em; }
+            .reveal h2 { font-size: 1.3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Portada -->
+            <section class="title-slide" data-background-color="#0a0a0a">
+                <div class="emoji-icon">📍</div>
+                <h1>Geomemorias2</h1>
+                <p class="subtitle">Recordatorios Geolocalizados para Android</p>
+                <p style="font-size: 0.7em; color: #607d8b; margin-top: 2em;">
+                    ⏱️ Duración: 10-15 minutos<br>
+                    🎯 Objetivo: Demostrar la app y su valor
+                </p>
+                <aside class="notes">
+                    Hola a todos. Mi nombre es [Nombre] y hoy les presento Geomemorias2,
+                    una app Android de recordatorios geolocalizados.
+                </aside>
+            </section>
+
+            <!-- SLIDE 2: El Problema -->
+            <section data-background-color="#0a0a0a">
+                <h2>El Problema</h2>
+                <p style="color: #90a4ae; margin-bottom: 0.5em;">
+                    Todos hemos olvidado algo importante al pasar por un lugar clave.
+                </p>
+
+                <div class="problem-grid">
+                    <div class="problem-card fragment fade-up">
+                        <span class="emoji">🛒</span>
+                        <p>¿Olvidas comprar algo en el supermercado?</p>
+                    </div>
+                    <div class="problem-card fragment fade-up">
+                        <span class="emoji">💊</span>
+                        <p>¿Pasas por la farmacia y se olvidan las medicinas?</p>
+                    </div>
+                    <div class="problem-card fragment fade-up">
+                        <span class="emoji">📄</span>
+                        <p>¿Llegas a la oficina y recuerdas el documento?</p>
+                    </div>
+                    <div class="problem-card fragment fade-up">
+                        <span class="emoji">⛽</span>
+                        <p>¿Te olvidas de parar a cargar gasolina?</p>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.8em; color: #ef9a9a; font-size: 0.9em;">
+                    El problema no es la memoria.<br>
+                    El problema es que los recordatorios se basan en <strong>Tiempo</strong>, no en <strong>Ubicación</strong>.
+                </p>
+
+                <aside class="notes">
+                    ¿Les ha pasado que olvidan algo al pasar por un lugar importante?
+                    Los recordatorios tradicionales se activan por tiempo, no por ubicación.
+                </aside>
+            </section>
+
+            <!-- SLIDE 3: La Solución -->
+            <section data-background-color="#0a0a0a">
+                <h2>La Solución</h2>
+
+                <div class="solution-highlight fragment fade-up">
+                    <p style="font-size: 1em; color: #e0e0e0;">
+                        <span class="highlight-text">Geomemorias2</span> es una app Android que crea recordatorios
+                        anclados a <span class="highlight-text">ubicaciones físicas</span> del mundo real.
+                    </p>
+                </div>
+
+                <div style="margin-top: 0.8em;" class="fragment fade-up">
+                    <p style="font-size: 0.8em; color: #b0bec5;">
+                        Guardas un recordatorio con:<br>
+                        📝 Texto &nbsp;&nbsp;|&nbsp;&nbsp; 📍 Coordenadas GPS &nbsp;&nbsp;|&nbsp;&nbsp; 📏 Radio de activación
+                    </p>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.8em; font-size: 1.1em; color: #4fc3f7;">
+                    No necesitas recordar.<br>La ubicación activa el recordatorio por ti.
+                </p>
+
+                <aside class="notes">
+                    Geomemorias2 es una app Android que crea recordatorios anclados a ubicaciones físicas.
+                    Guardas un recordatorio con texto, coordenadas GPS y un radio de activación.
+                    La app te avisa automáticamente cuando estás cerca.
+                </aside>
+            </section>
+
+            <!-- SLIDE 4: Cómo Funciona -->
+            <section data-background-color="#0a0a0a">
+                <h2>¿Cómo Funciona?</h2>
+
+                <div class="steps">
+                    <div class="step fragment fade-up">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Abres la app y ves un mapa interactivo</div>
+                    </div>
+                    <div class="step fragment fade-up">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Tocas en una ubicación para fijar un punto</div>
+                    </div>
+                    <div class="step fragment fade-up">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Escribes el recordatorio y defines el radio</div>
+                    </div>
+                    <div class="step fragment fade-up">
+                        <div class="step-number">4</div>
+                        <div class="step-text">La app guarda y registra la geocerca</div>
+                    </div>
+                    <div class="step fragment fade-up">
+                        <div class="step-number">5</div>
+                        <div class="step-text">Te olvidas de la app. Ella hace el trabajo.</div>
+                    </div>
+                    <div class="step fragment fade-up">
+                        <div class="step-number">6</div>
+                        <div class="step-text">Al pasar cerca, recibes una notificación automática</div>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.5em; color: #4caf50; font-size: 0.9em;">
+                    ✨ Así de simple. Sin estrés, sin olvidos.
+                </p>
+
+                <aside class="notes">
+                    Veamos cómo funciona:
+                    Abres la app, tocas en el mapa, escribes el recordatorio, guardas.
+                    Te olvidas de la app. Al pasar cerca, recibes una notificación automática.
+                </aside>
+            </section>
+
+            <!-- SLIDE 5: Casos de Uso -->
+            <section data-background-color="#0a0a0a">
+                <h2>Casos de Uso Reales</h2>
+
+                <div class="use-case fragment fade-up">
+                    <h3>🛒 María — Compras del Supermercado</h3>
+                    <p>Crea recordatorios al inicio de la semana. El sábado, mientras camina, la app le avisa al pasar por cada tienda. No olvida nada.</p>
+                </div>
+
+                <div class="use-case fragment fade-up">
+                    <h3>🚗 Carlos — Entregas de Trabajo</h3>
+                    <p>Tiene que entregar documentos en 3 oficinas. Activa modo conducción y la app le dice por voz qué entregar en cada lugar.</p>
+                </div>
+
+                <div class="use-case fragment fade-up">
+                    <h3>🏥 Ana — Citas Médicas</h3>
+                    <p>Tiene cita con el dentista y necesita comprar medicinas. La app le recuerda al acercarse a la clínica y después en la farmacia.</p>
+                </div>
+
+                <div class="use-case fragment fade-up">
+                    <h3>🛣️ Roberto — Viaje por Carretera</h3>
+                    <p>Viaja 5 horas. Crea recordatorios para gasolina, descanso y comida. La app le avisa por voz mientras conduce.</p>
+                </div>
+
+                <aside class="notes">
+                    ¿Para qué sirve en la vida real?
+                    Compras, entregas de trabajo, citas médicas, viajes por carretera.
+                    La app se adapta a múltiples escenarios.
+                </aside>
+            </section>
+
+            <!-- SLIDE 6: Modo Conducción -->
+            <section data-background-color="#0a0a0a">
+                <h2>🚗 Modo Conducción</h2>
+
+                <div class="demo-box fragment fade-up">
+                    <h3>Overlay transparente sobre el mapa</h3>
+                    <p style="font-size: 0.7em; color: #a5d6a7; margin: 0;">
+                        Se activa cuando conduces. Muestra recordatorios cercanos por TTS
+                        mientras el teléfono está en segundo plano.
+                    </p>
+
+                    <div class="demo-features">
+                        <div class="demo-feature fragment fade-up">
+                            <span class="emoji">👆</span>
+                            Botones grandes de 64dp para tocar sin mirar
+                        </div>
+                        <div class="demo-feature fragment fade-up">
+                            <span class="emoji">🎤</span>
+                            Comando de voz para crear recordatorios hablando
+                        </div>
+                        <div class="demo-feature fragment fade-up">
+                            <span class="emoji">🔔</span>
+                            Notificación persistente con acción "Detener"
+                        </div>
+                        <div class="demo-feature fragment fade-up">
+                            <span class="emoji">🔋</span>
+                            Verificación de batería para alertas confiables
+                        </div>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.5em; font-size: 0.75em; color: #90a4ae;">
+                    "Toca el botón de voz, dice 'Recoger paquete en la oficina',<br>y se guarda automáticamente en su ubicación actual."
+                </p>
+
+                <aside class="notes">
+                    Una de nuestras features más importantes es el Modo Conducción.
+                    Overlay transparente, botones grandes, TTS por voz.
+                    El usuario puede crear recordatorios mientras conduce.
+                </aside>
+            </section>
+
+            <!-- SLIDE 7: Android Auto -->
+            <section data-background-color="#0a0a0a">
+                <h2>🚙 Android Auto</h2>
+
+                <div class="auto-mockup fragment fade-up">
+                    <h3>Integración con la pantalla del auto</h3>
+
+                    <div class="auto-features">
+                        <div class="auto-feature fragment fade-up">
+                            <span class="emoji">📋</span>
+                            Lista de recordatorios con distancia en tiempo real
+                        </div>
+                        <div class="auto-feature fragment fade-up">
+                            <span class="emoji">🔄</span>
+                            Auto-refresh cada 10 segundos
+                        </div>
+                        <div class="auto-feature fragment fade-up">
+                            <span class="emoji">👆</span>
+                            Navegación entre lista y detalle
+                        </div>
+                        <div class="auto-feature fragment fade-up">
+                            <span class="emoji">📐</span>
+                            Diseño cumpliendo directrices de Android Auto
+                        </div>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.5em; font-size: 0.8em; color: #9fa8da;">
+                    El usuario ve sus recordatorios en la pantalla del carro,<br>sin necesidad de tocar el teléfono.
+                </p>
+
+                <aside class="notes">
+                    También nos integramos con Android Auto.
+                    Usando la Car App Library, mostramos los recordatorios en la pantalla del auto.
+                    El usuario ve sus recordatorios sin tocar el teléfono.
+                </aside>
+            </section>
+
+            <!-- SLIDE 8: Tecnología -->
+            <section data-background-color="#0a0a0a">
+                <h2>Stack Tecnológico</h2>
+
+                <div class="tech-grid">
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🔷</span>
+                        <span class="name">Kotlin</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">💾</span>
+                        <span class="name">Room Database</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🗺️</span>
+                        <span class="name">OSMDroid</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">📍</span>
+                        <span class="name">Play Services Geofencing</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">⚙️</span>
+                        <span class="name">Foreground Service</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🚗</span>
+                        <span class="name">Car App Library</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🔊</span>
+                        <span class="name">TextToSpeech</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🎤</span>
+                        <span class="name">SpeechRecognizer</span>
+                    </div>
+                    <div class="tech-item fragment fade-up">
+                        <span class="emoji">🌐</span>
+                        <span class="name">Sin servidor</span>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.5em; font-size: 0.8em; color: #4fc3f7;">
+                    Todo funciona sin conexión a internet.<br>Los datos se guardan localmente. Privacidad total.
+                </p>
+
+                <aside class="notes">
+                    ¿Qué tecnologías usamos?
+                    Kotlin, Room, OSMDroid, Play Services, Foreground Service, Car App Library, TTS.
+                    Todo funciona sin conexión. Privacidad total.
+                </aside>
+            </section>
+
+            <!-- SLIDE 9: Arquitectura -->
+            <section data-background-color="#0a0a0a">
+                <h2>Arquitectura del Sistema</h2>
+
+                <div class="arch-layer fragment fade-up">
+                    <div class="icon">📱</div>
+                    <div class="content">
+                        <h3>UI</h3>
+                        <p>MainActivity · Driving Mode Overlay · Android Auto Screens</p>
+                    </div>
+                </div>
+
+                <div class="arch-layer fragment fade-up">
+                    <div class="icon">⚙️</div>
+                    <div class="content">
+                        <h3>Servicios</h3>
+                        <p>DrivingModeService · DrivingTtsManager · GeofenceBroadcastReceiver</p>
+                    </div>
+                </div>
+
+                <div class="arch-layer fragment fade-up">
+                    <div class="icon">💾</div>
+                    <div class="content">
+                        <h3>Datos</h3>
+                        <p>Room Database · ReminderDao · AppDatabaseProvider</p>
+                    </div>
+                </div>
+
+                <div class="arch-layer fragment fade-up">
+                    <div class="icon">🌐</div>
+                    <div class="content">
+                        <h3>Externa</h3>
+                        <p>Play Services · OSMDroid · TextToSpeech · Car App Library</p>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 0.5em; font-size: 0.75em; color: #90a4ae;">
+                    📡 Comunicación asíncrona via SharedFlow entre servicios y UI
+                </p>
+
+                <aside class="notes">
+                    Nuestra arquitectura tiene 4 capas: UI, Servicios, Datos, Externa.
+                    Usamos SharedFlow para comunicación asíncrona entre servicios y UI.
+                </aside>
+            </section>
+
+            <!-- SLIDE 10: Diferenciador -->
+            <section data-background-color="#0a0a0a">
+                <h2>¿Qué Nos Diferencia?</h2>
+
+                <div class="diff-list">
+                    <div class="diff-item fragment fade-up">
+                        <div class="number">1</div>
+                        <div class="text">
+                            <strong>Geofencing REAL en background:</strong> Play Services despierta la app aunque esté cerrada. No es polling, es proactividad.
+                        </div>
+                    </div>
+
+                    <div class="diff-item fragment fade-up">
+                        <div class="number">2</div>
+                        <div class="text">
+                            <strong>Modo conducción seguro:</strong> Overlay transparente, botones grandes, TTS por voz. Diseñado para no mirar la pantalla.
+                        </div>
+                    </div>
+
+                    <div class="diff-item fragment fade-up">
+                        <div class="number">3</div>
+                        <div class="text">
+                            <strong>Android Auto:</strong> Integración completa con la pantalla del auto. Los recordatorios aparecen mientras conduces.
+                        </div>
+                    </div>
+
+                    <div class="diff-item fragment fade-up">
+                        <div class="number">4</div>
+                        <div class="text">
+                            <strong>Privacidad total:</strong> Sin cuenta de usuario, sin servidor, sin datos compartidos. Todo local.
+                        </div>
+                    </div>
+
+                    <div class="diff-item fragment fade-up">
+                        <div class="number">5</div>
+                        <div class="text">
+                            <strong>Open-source:</strong> OSMDroid, sin API key de Google. Costo cero para el usuario.
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    ¿Qué nos diferencia de otras apps?
+                    Geofencing real en background, modo conducción seguro, Android Auto,
+                    privacidad total y open-source.
+                </aside>
+            </section>
+
+            <!-- SLIDE 11: Estado Actual -->
+            <section data-background-color="#0a0a0a">
+                <h2>Estado Actual</h2>
+                <p style="color: #4fc3f7; font-size: 0.9em;">Versión 1.2.0 — Funcional</p>
+
+                <div class="status-section">
+                    <h3 style="font-size: 0.8em; color: #4caf50; margin-top: 0.5em;">✅ Completado</h3>
+                    <div class="status-item done fragment fade-up">
+                        <span class="icon">✅</span>
+                        <span>Core: Room + Geofencing + OSMDroid + UI</span>
+                    </div>
+                    <div class="status-item done fragment fade-up">
+                        <span class="icon">✅</span>
+                        <span>Android Auto: Lista + Detalle</span>
+                    </div>
+                    <div class="status-item done fragment fade-up">
+                        <span class="icon">✅</span>
+                        <span>Modo Conducción: Foreground Service + TTS</span>
+                    </div>
+                    <div class="status-item done fragment fade-up">
+                        <span class="icon">✅</span>
+                        <span>Comandos de Voz</span>
+                    </div>
+                    <div class="status-item done fragment fade-up">
+                        <span class="icon">✅</span>
+                        <span>Documentación completa con diagramas Mermaid</span>
+                    </div>
+
+                    <h3 style="font-size: 0.8em; color: #ff9800; margin-top: 0.5em;">⏳ Pendiente</h3>
+                    <div class="status-item pending fragment fade-up">
+                        <span class="icon">⏳</span>
+                        <span>Verificar geofencing en dispositivo real</span>
+                    </div>
+                    <div class="status-item pending fragment fade-up">
+                        <span class="icon">⏳</span>
+                        <span>ProGuard release + firma APK</span>
+                    </div>
+                    <div class="status-item pending fragment fade-up">
+                        <span class="icon">⏳</span>
+                        <span>Probar notificaciones en Android Auto</span>
+                    </div>
+                </div>
+
+                <aside class="notes">
+                    Estado actual: Versión 1.2.0 funcional.
+                    Core completo, Android Auto, modo conducción, comandos de voz, documentación.
+                    Pendientes menores: verificar geofencing, firma APK, notificaciones en Android Auto.
+                </aside>
+            </section>
+
+            <!-- SLIDE 12: Cierre -->
+            <section data-background-color="#0a0a0a" class="thank-you">
+                <div class="emoji-icon">🙏</div>
+                <h1>¡Gracias!</h1>
+
+                <div class="closing-quote fragment fade-up">
+                    "No pierdas tiempo revisando tu lista de pendientes.<br>
+                    La app te avisa cuando estás cerca de lo que necesitas hacer."
+                </div>
+
+                <div class="summary-box fragment fade-up" style="margin-top: 1em;">
+                    <div class="summary-row">
+                        <span class="summary-label">📱 App:</span>
+                        <span class="summary-value">Geomemorias2 — Recordatorios Geolocalizados</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">🎯 Objetivo:</span>
+                        <span class="summary-value">Recordatorios que se activan por UBICACIÓN</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">⭐ Diferencial:</span>
+                        <span class="summary-value">Geofencing + Modo Auto + Android Auto</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">🔗 Repositorio:</span>
+                        <span class="summary-value">github.com/ssauron00/geomemorias2</span>
+                    </div>
+                </div>
+
+                <p class="fragment fade-up" style="margin-top: 1em; font-size: 1em; color: #4fc3f7;">
+                    ¿Preguntas?
+                </p>
+
+                <aside class="notes">
+                    Para cerrar, Geomemorias2 resuelve un problema real:
+                    Olvidar tareas al pasar por lugares específicos.
+                    ¿Preguntas?
+                </aside>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://unpkg.com/reveal.js@4.5.0/plugin/notes/notes.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            plugins: [ RevealNotes ],
+            // Speaker notes: press 'S' to open speaker view
+            width: 1200,
+            height: 700,
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+
+        // Keyboard shortcuts reference:
+        // - Space/Right: Next slide
+        // - Left: Previous slide
+        // - S: Speaker view (with notes and timer)
+        // - O: Overview mode
+        // - F: Fullscreen
+        // - B: Black screen
+    </script>
+</body>
+</html>

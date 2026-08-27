@@ -18,6 +18,46 @@
 - [x] Corregidos errores Kotlin: triggeringGeofences nullable, fromPixels(Int) no Float,
       return@setOnClickListener, smart-cast nullable de pendingPoint.
 - [x] Fix: Eliminado Configuration.setTileSource() inexistente en osmdroid (tile source se setea en MapView).
+- [x] Fix: Mapa en blanco - XYTileSource armaba URL malformada.
+- [x] Fix: Configuration.load() movido ANTES de setContentView() (requisito osmdroid).
+- [x] Fix: quitar setTileCacheEnabled (no existe en osmdroid 6.1.18).
+- [x] Fix: quitar setTileRequestTimeout (no existe en osmdroid 6.1.18).
+- [x] Fix: mapa no carga - setTileSource después de load() + config red/cache.
+- [x] Fix: lint warnings - POST_NOTIFICATIONS guard API 33+ + UUID substring fix.
+- [x] UI: lista lateral de recordatorios con distancia en vivo (DrawerLayout + RecyclerView + FusedLocationProviderClient).
+- [x] UI: borrar recordatorio (y remover su geofence) con confirmación.
+- [x] UI: editar radio despues de guardado + long-press en marker para borrar (diálogos).
+- [x] String resources: todos los strings hardcodeados movidos a strings.xml para internacionalización.
+- [x] UI: Botón "Mi ubicación" (📍) para centrar el mapa en la posición actual.
+- [x] UI: Marcador de ubicación actual (punto azul) que se actualiza con la posición en tiempo real.
+- [x] Fix: Lint warnings - permiso ACCESS_FINE_LOCATION verificado con checkSelfPermission.
+- [x] Fix: Import duplicado de ContextCompat eliminado.
+- [x] Fix: Propiedad isClickable eliminada (no existe en Marker de osmdroid 6.1.18).
+- [x] UI: Modo conducción con TTS - overlay con fuente gigante, lee recordatorio al entrar en radio.
+- [x] UI: Círculos de radio en el mapa - cada recordatorio muestra su radio visualizado.
+- [x] Fix: Modo conducción solo habla cuando estás DENTRO del radio del recordatorio.
+- [x] Fix: ViewBinding para overlays incluidos - referencias correctas con binding.drivingModeOverlay.viewId.
+- [x] Fix: Eliminar alertas de proximidad antes de llegar al radio (checkProximityAlerts eliminado).
+- [x] Fix: Control de repeticiones TTS - max 2 veces dentro del radio, 1 vez al salir.
+- [x] Fix: TTS para TODOS los recordatorios dentro del radio (no solo el más cercano) con QUEUE_ADD.
+- [x] Fix: Lint warnings - safe calls innecesarios eliminados.
+- [x] Fix: Parámetro no usado mapView renombrado a _ en addMarker.
+- [x] UI: Comando de voz para captura (SpeechRecognizer) - botón 🎤 junto al campo de texto.
+- [x] UI: Comando de voz en modo conducción - state machine conversacional (IDLE → ASK_TEXT → ASK_RADIUS).
+- [x] UI: Modo Mock de ubicación - botón "📍 Mock" para fijar ubicación tocando el mapa.
+- [x] Persistir/re-registrar geocercas al reiniciar la app (desde Room al arrancar) - método
+      reregisterGeofences() llamado desde onCreate() Y desde permLauncher al conceder permiso.
+- [x] Foreground Service para modo conducción en segundo plano (DrivingModeService).
+      - Servicio con localización propia + TTS en background.
+      - Notificación persistente con acción "Detener".
+      - SharedFlow para comunicación servicio→activity (ubicación en tiempo real).
+      - Handoff limpio: activity deja de registrar LocationCallback cuando el servicio corre.
+      - Re-registro de geocercas al reiniciar la app desde Room.
+- [x] Consolidación de canales de notificación: NotificationHelper es la única fuente
+      de verdad para el canal del modo conducción (DRIVING_CHANNEL_ID).
+- [x] Verificación de optimización de batería: al entrar en modo conducción, si la app
+      no está en la lista blanca de batería, muestra diálogo advirtiendo que las alertas
+      podrían detenerse al bloquear la pantalla. Opción de abrir ajustes de batería.
 
 ## Pendiente (verificación en dispositivo real)
 1. [ ] VERIFICAR en dispositivo Android 9+ real: guardar recordatorio, acercarse al punto,
@@ -25,17 +65,90 @@
       -> En VM no se pudo (sin GPS ni Play Services). Lo hace el usuario en su dispositivo.
 2. [ ] Fallback WorkManager para dispositivos SIN Google Play Services
       (geofence nativo no disponible en esos equipos).
-3. [ ] UI: lista lateral de recordatorios con distancia en vivo.
-4. [ ] UI: borrar recordatorio (y remover su geofence).
-5. [ ] UI: editar radio despues de guardado + long-press en marker para borrar.
-6. [ ] Modo conducción (ocultar panel, fuente gigante, leer por voz TTS) — pendiente heredado de v1.
-7. [ ] Comando de voz para captura (SpeechRecognizer).
-8. [ ] Mock de ubicacion para probar sin moverse (como la v1 web).
-9. [ ] Persistir/re-registrar geocercas al reiniciar la app (desde Room al arrancar).
-10. [ ] ProGuard en release (ofuscar) + firmar APK de release.
+3. [x] Comando de voz para captura (SpeechRecognizer). ← COMPLETADO
+4. [x] Mock de ubicacion para probar sin moverse (como la v1 web). ← COMPLETADO
+5. [x] Persistir/re-registrar geocercas al reiniciar la app (desde Room al arrancar). ← COMPLETADO
+6. [ ] ProGuard en release (ofuscar) + firmar APK de release.
+
+## Android Auto (Opción 2: Notificaciones automáticas — mínima modificación)
+7. [x] Agregar meta-data en AndroidManifest.xml:
+      <meta-data android:name="com.google.android.gms.car.notification" android:value="true" />
+8. [x] Mejorar NotificationHelper.fire() con CATEGORY_NAVIGATION + BigTextStyle.
+9. [ ] Crear ícono propio para notificación (no android.R.drawable.ic_dialog_map)
+      que sea visible en el display del auto.
+10.[x] Agregar meta-data del APPLICATION_ID para Android Auto (app_id en strings.xml).
+11.[ ] Probar notificación en Android Auto: conectar dispositivo, abrir Geomemorias,
+       activar modo conducción, verificar que las notificaciones aparecen en la pantalla del auto.
+
+## Android Auto (Opción 1: Car App Library — experiencia completa)
+12.[x] Agregar dependencia en app/build.gradle: androidx.car.app:app:1.4.0
+13.[x] Crear GeomemoriasCarService.kt: extiende CarAppService, createHostValidator,
+      onCreateSession() retorna Session con ReminderListScreen.
+14.[x] Crear ReminderListScreen.kt: ListTemplate con SectionedItemList,
+      lifecycleScope para auto-refresh cada 10s, distancia en tiempo real,
+      click en item → navegar a ReminderDetailScreen.
+15.[x] Crear ReminderDetailScreen.kt: PaneTemplate con filas de info
+      (texto, coordenadas, radio, estado de notificación).
+16.[x] Registrar CarAppService en AndroidManifest.xml con intent-filter.
+17.[x] Agregar strings para UI de Android Auto (car_list_title, car_empty_list, etc.)
+18.[ ] Probar con Android Auto Desktop Head Unit (DHU) o dispositivo físico:
+      - Verificar que la lista aparece correctamente
+      - Navegación entre pantallas funciona
+      - Se actualiza cuando se crea/borra un recordatorio
+19.[ ] Agregar PlaceListMapTemplate para vista de mapa + lista (premium UX):
+      - Muestra mapa con los puntos de los recordatorios
+      - Lista lateral con cada recordatorio
+20.[ ] Verificar cumplimiento de directrices de diseño para Auto:
+      - Texto grande y de alto contraste
+      - Mínimo 3-4 items visibles
+      - Sin interacciones complejas
+      - Actualizaciones no más de 1 vez por segundo
 
 ## Notas
 - OSMDroid requiere internet para tiles (o cache offline). Sin API key (coherente con v1).
 - Geofencing de Play Services requiere Google Play Services instalado en el dispositivo.
 - Compilado y verificado en VM; prueba funcional en dispositivo Android 9+ a cargo del usuario.
 - La v1 web esta en ../geomemorias (Documento_Tecnico.md explica el nucleo).
+- UI mejorada: drawer lateral con lista de recordatorios, distancia en tiempo real.
+- Botón "Mi ubicación" con marcador azul de ubicación actual en tiempo real.
+- Círculos de radio en mapa: cálculo geodésico preciso con fórmula esférica correcta.
+- Modo conducción: TTS solo se activa cuando estás dentro del radio del recordatorio.
+- TTS state machine: ENTER -> speak 1 vez, INSIDE -> speak hasta 2 veces total, EXIT -> speak 1 más.
+- TTS procesa TODOS los recordatorios dentro del radio simultáneamente (QUEUE_ADD).
+- Comando de voz: SpeechRecognizer con botón 🎤, toggle listening, RecognitionListener completo.
+- Comando de voz en conducción: "recordatorio" → TTS pregunta → usuario responde → guarda.
+- Mock de ubicación: botón 📍 Mock, toca mapa para fijar ubicación, GPS desactivado mientras activo.
+- Geocercas se re-registran automáticamente al iniciar la app desde Room (surviven restarts).
+- Todos los strings movidos a strings.xml para soporte de internacionalización.
+
+## Modo Conducción — Funcionalidades (actualizado 2026-08-20)
+- Overlay con fondo TRANSPARENTE: el mapa se ve detrás del overlay.
+- Barra superior: muestra recordatorio más cercano + radio + distancia.
+- Barra inferior con 2 botones grandes (64dp, fácil de tocar conduciendo):
+  - 🎤 Hablar: graba voz → auto-guarda recordatorio en ubicación actual al terminar de hablar.
+  - 📌 Fijar punto: guarda ubicación actual con texto por defecto en un toque.
+- Indicador de voz: spinner azul + "🎤 Di tu recordatorio…" mientras graba.
+- Botón salir rojo pequeño abajo.
+- Mapa interactivo visible: zoom, pan, markers de recordatorios visibles.
+- isDrivingVoiceMode flag para distinguir grabación de voz en modo conducción vs normal.
+- saveDrivingModeReminder() delega a saveVoiceReminder() para evitar duplicación.
+- speechLauncher maneja resultados de voz en modo conducción.
+- enterDrivingMode()/exitDrivingMode() muestran/ocultan wrapper + overlay.
+- Layout: overlay envuelto en FrameLayout con clipChildren=false.
+- Strings: driving_btn_voice, driving_btn_add_reminder, driving_voice_listening, etc.
+- Validación de texto vacío: btnSave y showEditDialog muestran Snackbar + TextInputLayout.setError()
+  cuando el usuario intenta guardar con texto vacío (en vez de fallback silencioso a "Recordatorio").
+
+## Sugerencias / Futuras mejoras
+21.[ ] Campo de descripción/note al recordatorio para guardar notas adicionales
+      (ej: "Llevar paraguas", "Solo los lunes", "Preguntar por descuento").
+22.[ ] Editar la ubicación del recordatorio desde el diálogo de edición
+      (mover el marker en el mapa, re-posicionar la geocerca).
+23.[ ] Campo de "Categoría" al recordatorio para clasificarlos
+      (trabajo, casa, salud, compras, etc.) + filtrar por categoría en la lista.
+24.[ ] Mapa sigue la ubicación del usuario automáticamente en modo conducción
+      (map follow mode con botón para activar/desactivar).
+25.[ ] Permitir personalizar el radio por voz en modo conducción
+      (ej: "farmacia... 200 metros" en un solo paso).
+26.[ ] Confirmación antes de guardar el punto en modo conducción
+      (mostrar coordenadas y preguntar "¿Guardar aquí?").
