@@ -57,19 +57,8 @@
             </intent-filter>
         </receiver>
 
-        <!-- ═══════════════════════════════════════════════════════════
-             Android Auto — Opción 2: Notificaciones automáticas
-             Las notificaciones de geofence aparecen en la pantalla del auto
-             ═══════════════════════════════════════════════════════════ -->
-        <!-- Descriptor de Android Auto: indica que la app usa templates -->
-        <meta-data
-            android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
-
-        <!-- ═══════════════════════════════════════════════════════════
-             Android Auto — Opción 1: Car App Library
-             Servicio que muestra la lista de recordatorios en el auto
-             ═══════════════════════════════════════════════════════════ -->
+        <!-- Android Auto — Car App Library
+             Servicio que muestra la lista de recordatorios en el auto -->
         <service
             android:name=".EcosCarService"
             android:exported="true"
@@ -78,7 +67,6 @@
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="androidx.car.app.CarAppService" />
-                <category android:name="androidx.car.app.category.POI" />
             </intent-filter>
             <meta-data
                 android:name="androidx.car.app.minCarApiLevel"
