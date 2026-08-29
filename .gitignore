@@ -27,6 +27,11 @@ local.properties
 *.aab
 *.ap_
 
+# Release keystore
+*.keystore
+*.jks
+keystore.properties
+
 # Misc
 *.log
 *.tmp
